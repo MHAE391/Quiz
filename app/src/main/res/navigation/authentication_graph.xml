@@ -21,5 +21,9 @@
         android:id="@+id/OTPVerificationFragment"
         android:name="com.m391.quiz.ui.authentication.otp.OTPVerificationFragment"
         android:label="OTPVerificationFragment"
-        tools:layout="@layout/fragment_otp_verification" />
+        tools:layout="@layout/fragment_otp_verification" >
+        <argument
+            android:name="phoneNumber"
+            app:argType="string" />
+    </fragment>
 </navigation>

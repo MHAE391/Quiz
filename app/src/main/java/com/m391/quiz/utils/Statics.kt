@@ -3,24 +3,16 @@ package com.m391.quiz.utils
 import android.provider.MediaStore
 
 object Statics {
-
-    const val SONG_ID = MediaStore.Audio.Media._ID
-    const val SONG_ARTIST = MediaStore.Audio.Media.ARTIST
-    const val SONG_ALBUM = MediaStore.Audio.Media.ALBUM
-    const val SONG_DURATION = MediaStore.Audio.Media.DURATION
-    const val SONG_FILE_PATH = MediaStore.Audio.Media.DATA
-    const val SONG_TITLE = MediaStore.Audio.Media.TITLE
-    const val ALBUM_ID = MediaStore.Audio.Media.ALBUM_ID
-
-    //////////////////
-    const val NOTIFICATION_CHANNEL_ID = "com.m391.musica.channel"
-    const val FOREGROUND_SERVICE_ID = 123
-    const val ACTION_PLAY = "action_play"
-    const val ACTION_PAUSE = "action_pause"
-    const val ACTION_NEXT = "action_next"
-    const val ACTION_CANCEL = "action_cancel"
-    const val ACTION_PREVIOUS = "action_previous"
-    const val MUSIC_SERVICE = "music_service"
-    const val CURRENT_PLAYLIST = "current_playlist"
-    const val CURRENT_PLAYING_SONG = "current_playing_song"
+    const val ONE_MEGABYTE: Long = 1024 * 1024
+    const val CODE_SENT = "Code Sent"
+    const val EMPTY_OTP = "Please Enter OTP"
+    const val SUCCESSFUL_LOGIN = "Successful Login"
+    const val INVALID_CODE = "Wrong OTP"
+    const val RESPONSE_SUCCESS = "Success"
+    const val RESPONSE_INVALID_REQUEST = "Invalid Request"
+    const val RESPONSE_SMS_LIMIT_EXCEEDED = "SMS Limit Exceeded"
+    const val RESPONSE_RECAPTCHA_WITH_NULL_ACTIVITY = "reCAPTCHA With Null Activity"
+    const val EMPTY_PHONE_NUMBER = "Please Enter Yor Phone"
+    const val INVALID_PHONE_NUMBER = "Invalid Phone Number"
+    const val NOT_COMPLETE_OTP = "Complete OTP Codes"
 }

@@ -4,6 +4,7 @@ import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.media.MediaMetadataRetriever
+import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
@@ -32,6 +33,25 @@ object Binding {
             }
         }
     }
+
+    @BindingAdapter("android:fadeVisible")
+    @JvmStatic
+    fun setFadeVisible(view: View, visible: Boolean? = true) {
+        if (view.tag == null) {
+            view.tag = true
+            view.visibility = if (visible == true) View.VISIBLE else View.GONE
+        } else {
+            view.animate().cancel()
+            if (visible == true) {
+                if (view.visibility == View.GONE)
+                    view.fadeIn()
+            } else {
+                if (view.visibility == View.VISIBLE)
+                    view.fadeOut()
+            }
+        }
+    }
+
 
     @BindingAdapter("android:imageUrl")
     @JvmStatic
