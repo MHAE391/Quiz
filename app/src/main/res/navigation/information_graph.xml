@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/information_graph"
+    app:startDestination="@id/studentInformationFragment">
+
+    <fragment
+        android:id="@+id/studentInformationFragment"
+        android:name="com.m391.quiz.ui.authentication.information.student.StudentInformationFragment"
+        android:label="StudentInformationFragment"
+        tools:layout="@layout/fragment_student_information">
+        <action
+            android:id="@+id/action_studentInformationFragment_to_teacherInformationFragment"
+            app:destination="@id/teacherInformationFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right"
+            app:popUpTo="@id/information_graph" />
+    </fragment>
+    <fragment
+        android:id="@+id/teacherInformationFragment"
+        android:name="com.m391.quiz.ui.authentication.information.teacher.TeacherInformationFragment"
+        android:label="TeacherInformationFragment"
+        tools:layout="@layout/fragment_teacher_information">
+        <action
+            android:id="@+id/action_teacherInformationFragment_to_studentInformationFragment"
+            app:destination="@id/studentInformationFragment"
+            app:enterAnim="@anim/from_left"
+            app:exitAnim="@anim/to_right"
+            app:popEnterAnim="@anim/from_right"
+            app:popExitAnim="@anim/to_left"
+            app:popUpTo="@id/information_graph" />
+    </fragment>
+
+
+</navigation>

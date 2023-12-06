@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:scrollbars="none"
+        tools:context=".ui.authentication.information.teacher.TeacherInformationFragment">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white">
+
+            <LinearLayout
+                android:id="@+id/image_name_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                tools:ignore="UselessParent">
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="125dp"
+                    android:layout_margin="@dimen/margin_5"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/profile_image"
+                    android:padding="@dimen/padding_10"
+                    android:src="@mipmap/person" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:orientation="vertical"
+                    android:padding="@dimen/padding_10">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_margin="@dimen/margin_5"
+                        android:layout_weight="1"
+                        android:autofillHints="name"
+                        android:background="@drawable/edit_text_view"
+                        android:gravity="start|center"
+                        android:hint="@string/first_name"
+                        android:inputType="text"
+                        android:padding="@dimen/padding_10"
+                        android:textSize="@dimen/font_size_14"
+                        android:textStyle="normal"
+                        tools:ignore="NestedWeights,TouchTargetSizeCheck" />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_margin="@dimen/margin_5"
+                        android:layout_weight="1"
+                        android:autofillHints="name"
+                        android:background="@drawable/edit_text_view"
+                        android:gravity="start|center"
+                        android:hint="@string/last_name"
+                        android:inputType="text"
+                        android:padding="@dimen/padding_10"
+                        android:textSize="@dimen/font_size_14"
+                        android:textStyle="normal"
+                        tools:ignore="NestedWeights,TouchTargetSizeCheck" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:id="@+id/image_name_fasla"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_below="@id/image_name_layout"
+                android:layout_marginStart="@dimen/margin_20"
+                android:layout_marginEnd="@dimen/margin_20"
+                android:background="@color/border_color" />
+
+            <LinearLayout
+                android:id="@+id/academic_barth_subjects"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/image_name_fasla"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:id="@+id/date_of_barth_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_margin="@dimen/margin_5"
+                    android:layout_marginStart="@dimen/margin_5"
+                    android:layout_marginTop="@dimen/margin_5"
+                    android:layout_marginEnd="@dimen/margin_5"
+                    android:layout_marginBottom="@dimen/margin_5"
+                    android:layout_weight="1"
+                    android:padding="@dimen/padding_5">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:gravity="center"
+                        android:padding="@dimen/padding_5"
+                        android:text="@string/date_of_barth"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/font_size_16"
+                        android:textStyle="bold|italic"
+                        tools:ignore="NestedWeights,RelativeOverlap" />
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/teacher_date_of_barth"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center_vertical"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:padding="@dimen/padding_10"
+                        app:cardCornerRadius="10dp"
+                        app:cardUseCompatPadding="true"
+                        tools:cardCornerRAdius="5dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:padding="@dimen/padding_10"
+                            android:text="@string/select_date_of_barth"
+                            android:textColor="@color/card_view_text"
+                            android:textSize="@dimen/font_size_14"
+                            android:textStyle="bold|normal" />
+                    </androidx.cardview.widget.CardView>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/academic_year_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_margin="@dimen/margin_5"
+                    android:layout_weight="1"
+                    android:padding="@dimen/padding_5">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:gravity="center"
+                        android:padding="@dimen/padding_5"
+                        android:text="@string/select_teacher_academic_years"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/font_size_16"
+                        android:textStyle="bold|italic"
+                        tools:ignore="NestedWeights,RelativeOverlap" />
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/teacher_academic_year"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center_vertical"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:padding="@dimen/padding_10"
+                        app:cardCornerRadius="10dp"
+                        app:cardUseCompatPadding="true"
+                        tools:cardCornerRAdius="5dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:padding="@dimen/padding_10"
+                            android:text="@string/academic_years"
+                            android:textColor="@color/card_view_text"
+                            android:textSize="@dimen/font_size_14"
+                            android:textStyle="bold|normal" />
+                    </androidx.cardview.widget.CardView>
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:id="@+id/subjects_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_margin="@dimen/margin_5"
+                    android:layout_weight="1"
+                    android:padding="@dimen/padding_5">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:gravity="center"
+                        android:padding="@dimen/padding_5"
+                        android:text="@string/select_teacher_academic_subjects"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/font_size_16"
+                        android:textStyle="bold|italic"
+                        tools:ignore="NestedWeights,RelativeOverlap" />
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/teacher_subjects"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center_vertical"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:padding="@dimen/padding_10"
+                        app:cardCornerRadius="10dp"
+                        app:cardUseCompatPadding="true"
+                        tools:cardCornerRAdius="5dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:padding="@dimen/padding_10"
+                            android:text="@string/academic_subjects"
+                            android:textColor="@color/card_view_text"
+                            android:textSize="@dimen/font_size_14"
+                            android:textStyle="bold|normal" />
+                    </androidx.cardview.widget.CardView>
+                </RelativeLayout>
+            </LinearLayout>
+
+            <View
+                android:id="@+id/academic_barth_subjects_fasla"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_below="@id/academic_barth_subjects"
+                android:layout_marginStart="@dimen/margin_20"
+                android:layout_marginEnd="@dimen/margin_20"
+                android:background="@color/border_color" />
+
+            <Button
+                android:id="@+id/submit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/academic_barth_subjects_fasla"
+                android:layout_marginStart="@dimen/margin_80"
+                android:layout_marginTop="@dimen/margin_20"
+                android:layout_marginEnd="@dimen/margin_80"
+                android:layout_marginBottom="@dimen/margin_20"
+                android:background="@drawable/button_shape"
+                android:text="@string/submit"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+    </ScrollView>
+</layout>

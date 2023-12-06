@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Quiz</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="otp">OTP Verification</string>
     <string name="message_verification">You will receive verification code on this mobile number</string>
@@ -13,4 +12,48 @@
     <string name="resend_otp">Resend Code</string>
     <string name="verify">Verify</string>
     <string name="otp_otp">OTP</string>
+    <string name="info">Information</string>
+    <string name="teacher">Teacher</string>
+    <string name="student">Student</string>
+    <string name="profile_image">Profile Image</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="academic">Academic Year</string>
+    <string name="set_data">Set Data</string>
+    <string name="first_primary">First Primary</string>
+    <string name="second_primary">Second Primary</string>
+    <string name="third_primary">Third Primary</string>
+    <string name="fourth_primary">Fourth Primary</string>
+    <string name="fifth_primary">Fifth Primary</string>
+    <string name="sixth_primary">Sixth Primary</string>
+    <string name="first_preparatory">First Preparatory</string>
+    <string name="second_preparatory">Second Preparatory</string>
+    <string name="third_preparatory">Third Preparatory</string>
+    <string name="first_secondary">First Secondary</string>
+    <string name="second_secondary">Second Secondary</string>
+    <string name="third_secondary">Third Secondary</string>
+    <string name="academic_year">Select Academic Year</string>
+    <string name="select_student_academic_year">Academic Year</string>
+    <string name="date_of_barth">Date Of Barth</string>
+    <string name="select_date_of_barth">Select Date Of Barth</string>
+    <string name="submit">Submit</string>
+    <string name="academic_years">Select Academic Years</string>
+    <string name="select_teacher_academic_years">Academic Years</string>
+    <string name="academic_subjects">Select Subjects</string>
+    <string name="select_teacher_academic_subjects">Academic Subjects</string>
+    <string-array name="academic_years_array">
+        <item>None</item>
+        <item>First Primary</item>
+        <item>Second Primary</item>
+        <item>Third Primary</item>
+        <item>Fourth Primary</item>
+        <item>Fifth Primary</item>
+        <item>Sixth Primary</item>
+        <item>First Preparatory</item>
+        <item>Second Preparatory</item>
+        <item>Third Preparatory</item>
+        <item>First Secondary</item>
+        <item>Second Secondary</item>
+        <item>Third Secondary</item>
+    </string-array>
 </resources>

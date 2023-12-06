@@ -20,4 +20,5 @@
     <color name="border_color">#0D174188</color>
     <color name="hint_text_color">#546E7A</color>
     <color name="color_rose">#E34234</color>
+    <color name="card_view_text">#0F228C</color>
 </resources>
