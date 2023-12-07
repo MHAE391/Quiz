@@ -41,8 +41,12 @@
     <string name="select_teacher_academic_years">Academic Years</string>
     <string name="academic_subjects">Select Subjects</string>
     <string name="select_teacher_academic_subjects">Academic Subjects</string>
+    <string name="select_student_academic">selectStudentAcademicYear</string>
+    <string name="select_student_subjects">selectStudentSubjects</string>
+    <string name="select_teacher_subjects">selectTeacherSubjects</string>
+    <string name="select_teacher_academic">selectTeacherAcademicYears</string>
+
     <string-array name="academic_years_array">
-        <item>None</item>
         <item>First Primary</item>
         <item>Second Primary</item>
         <item>Third Primary</item>
@@ -55,5 +59,20 @@
         <item>First Secondary</item>
         <item>Second Secondary</item>
         <item>Third Secondary</item>
+    </string-array>
+    <string-array name="academic_subjects_array">
+        <item>English</item>
+        <item>Biology</item>
+        <item>Chemistry</item>
+        <item>Mathematics</item>
+        <item>French</item>
+        <item>Arabic</item>
+        <item>Physics</item>
+        <item>Geology</item>
+        <item>Philosophy</item>
+        <item>German</item>
+        <item>History</item>
+        <item>Science</item>
+        <item>Geography</item>
     </string-array>
 </resources>
