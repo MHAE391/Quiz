@@ -16,6 +16,7 @@ import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
+import com.m391.quiz.R
 import com.squareup.picasso.Picasso
 import java.text.SimpleDateFormat
 import java.time.Duration
@@ -64,5 +65,12 @@ object Binding {
         Picasso.get().load(imageUrl)
             .placeholder(circularProgressDrawable)
             .into(imageView)
+    }
+
+    @BindingAdapter("android:profileImage")
+    @JvmStatic
+    fun loadProfileImage(imageView: ImageView, imageUrl: String?) {
+        if (imageUrl == null) imageView.setImageResource(R.mipmap.person)
+        else loadImage(imageView, imageUrl)
     }
 }

@@ -11,20 +11,35 @@ import com.m391.quiz.R
 import com.m391.quiz.databinding.FragmentTeacherInformationBinding
 import com.m391.quiz.ui.authentication.information.setDateOfBarth
 import androidx.activity.result.PickVisualMediaRequest
+import androidx.lifecycle.lifecycleScope
+import com.m391.quiz.ui.authentication.information.InformationViewModel
+import com.m391.quiz.ui.authentication.information.InformationViewModelFactory
 import com.m391.quiz.ui.authentication.information.shared.AcademicSubjectsFragment
 import com.m391.quiz.ui.authentication.information.shared.AcademicYearsFragment
 
 import com.m391.quiz.ui.shared.BaseFragment
 import com.m391.quiz.ui.shared.BaseViewModel
 import com.m391.quiz.utils.Binding
+import com.m391.quiz.utils.Statics
+import com.m391.quiz.utils.Statics.RESPONSE_SUCCESS
+import kotlinx.coroutines.launch
 
 class TeacherInformationFragment : BaseFragment() {
 
     private val binding: FragmentTeacherInformationBinding by lazy {
         FragmentTeacherInformationBinding.inflate(layoutInflater)
     }
+    private val informationViewModel: InformationViewModel by activityViewModels {
+        InformationViewModelFactory(requireActivity().application, remoteDatabase.information)
+    }
 
-    override val viewModel: TeacherInformationViewModel by activityViewModels()
+    override val viewModel: TeacherInformationViewModel by activityViewModels {
+        TeacherInformationViewModelFactory(
+            requireActivity().application,
+            informationViewModel.uploadUserData
+        )
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -69,7 +84,10 @@ class TeacherInformationFragment : BaseFragment() {
             )
         }
         binding.submit.setOnClickListener {
-
+            disabledUI()
+            lifecycleScope.launch {
+                viewModel.uploadStudentData()
+            }
         }
     }
 
@@ -85,13 +103,41 @@ class TeacherInformationFragment : BaseFragment() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.teacherImageProfile.observe(viewLifecycleOwner) {
-            Binding.loadImage(binding.profileImage, it.toString())
+        viewModel.response.observe(viewLifecycleOwner) { response ->
+            if (!response.isNullOrEmpty()) {
+                if (response == RESPONSE_SUCCESS) {
+                    viewModel.showToast(response)
+                } else {
+                    viewModel.showSnackBar(response, requireView())
+                }
+                enabledUI()
+                viewModel.resetResponse()
+            }
         }
     }
 
     override fun onPause() {
         super.onPause()
-        viewModel.teacherImageProfile.removeObservers(viewLifecycleOwner)
+        viewModel.response.removeObservers(viewLifecycleOwner)
+        viewModel.resetResponse()
+    }
+
+    private fun enabledUI() {
+        enableDisableUI(true)
+    }
+
+    private fun disabledUI() {
+        enableDisableUI(false)
+    }
+
+    private fun enableDisableUI(value: Boolean) {
+        informationViewModel.setSwitchAndLoading(value)
+        binding.teacherDateOfBarth.isEnabled = value
+        binding.profileImage.isEnabled = value
+        binding.submit.isEnabled = value
+        binding.teacherSubjects.isEnabled = value
+        binding.teacherAcademicYears.isEnabled = value
+        binding.firstName.isEnabled = value
+        binding.lastName.isEnabled = value
     }
 }

@@ -37,6 +37,7 @@
                     android:layout_weight="1"
                     android:contentDescription="@string/profile_image"
                     android:padding="@dimen/padding_10"
+                    android:profileImage="@{viewModel.teacherProfileImage}"
                     android:src="@mipmap/person" />
 
                 <LinearLayout
@@ -47,6 +48,7 @@
                     android:padding="@dimen/padding_10">
 
                     <EditText
+                        android:id="@+id/first_name"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_margin="@dimen/margin_5"
@@ -63,6 +65,7 @@
                         tools:ignore="NestedWeights,TouchTargetSizeCheck" />
 
                     <EditText
+                        android:id="@+id/last_name"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_margin="@dimen/margin_5"
@@ -131,6 +134,7 @@
                         android:clickable="true"
                         android:focusable="true"
                         android:foreground="?android:attr/selectableItemBackground"
+                        android:minWidth="48dp"
                         android:padding="@dimen/padding_10"
                         app:cardCornerRadius="10dp"
                         app:cardUseCompatPadding="true"

@@ -30,7 +30,7 @@ class AcademicYearsFragment : BottomSheetDialogFragment() {
         AcademicYearsAndSubjectsViewModelFactory(
             requireActivity().application,
             if (teacherOrStudent) studentInformationViewModel.studentYear
-            else teacherInformationViewModel.teacherAcademicYear,
+            else teacherInformationViewModel.teacherAcademicYears,
             if (teacherOrStudent) studentInformationViewModel.selectYear
             else teacherInformationViewModel.selectYear,
             if (teacherOrStudent) studentInformationViewModel.unSelectSubject

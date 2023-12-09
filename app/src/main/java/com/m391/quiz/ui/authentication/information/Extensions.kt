@@ -4,6 +4,7 @@ import android.app.DatePickerDialog
 import android.content.Context
 import android.widget.DatePicker
 import java.util.Calendar
+import java.util.Locale
 
 fun setDateOfBarth(context: Context, dateOfBarth: (String) -> Unit) {
     val calendar = Calendar.getInstance()
@@ -21,3 +22,4 @@ fun setDateOfBarth(context: Context, dateOfBarth: (String) -> Unit) {
     )
     datePickerDialog.show()
 }
+

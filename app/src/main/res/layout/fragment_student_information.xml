@@ -37,6 +37,7 @@
                     android:layout_weight="1"
                     android:contentDescription="@string/profile_image"
                     android:padding="@dimen/padding_10"
+                    android:profileImage="@{viewModel.studentProfileImage}"
                     android:src="@mipmap/person" />
 
                 <LinearLayout
@@ -47,6 +48,7 @@
                     android:padding="@dimen/padding_10">
 
                     <EditText
+                        android:id="@+id/first_name"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_margin="@dimen/margin_5"
@@ -63,6 +65,7 @@
                         tools:ignore="NestedWeights,TouchTargetSizeCheck" />
 
                     <EditText
+                        android:id="@+id/last_name"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_margin="@dimen/margin_5"
