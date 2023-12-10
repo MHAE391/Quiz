@@ -6,14 +6,14 @@
 
         <variable
             name="viewModel"
-            type="com.m391.quiz.ui.authentication.information.shared.AcademicYearsAndSubjectsViewModel" />
+            type="com.m391.quiz.ui.shared.bottom_sheets.AcademicYearsAndSubjectsViewModel" />
     </data>
 
     <RelativeLayout
         android:id="@+id/bottom"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.authentication.information.shared.AcademicYearsFragment">
+        tools:context=".ui.shared.bottom_sheets.AcademicYearsFragment">
 
         <RelativeLayout
             android:id="@+id/header_title"

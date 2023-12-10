@@ -1,4 +1,4 @@
-package com.m391.quiz.ui.authentication.information.shared
+package com.m391.quiz.ui.shared.bottom_sheets
 
 import android.app.Application
 import androidx.lifecycle.LiveData
@@ -28,18 +28,31 @@ class AcademicYearsAndSubjectsViewModel(
         unSelectItem(checkItem.item)
     }
 
-    private var selectedItem: CheckItem? = null
+    private var selectedYear: CheckItem? = null
     fun setYearItemChecked(checkItem: CheckItem) {
         selectItem(checkItem.item)
-        selectedItem = checkItem
+        selectedYear = checkItem
         _academicYearsList.postValue(
             _academicYearsList.value!!.map { item ->
                 CheckItem(
                     item.item,
-                    selectedItem != null && selectedItem!!.item == item.item
+                    selectedYear != null && selectedYear!!.item == item.item
                 )
             })
 
+    }
+
+    private var selectedSubject: CheckItem? = null
+    fun setSubjectItemChecked(checkItem: CheckItem) {
+        selectItem(checkItem.item)
+        selectedSubject = checkItem
+        _academicSubjectsList.postValue(
+            _academicSubjectsList.value!!.map { item ->
+                CheckItem(
+                    item.item,
+                    selectedSubject != null && selectedSubject!!.item == item.item
+                )
+            })
     }
 
 

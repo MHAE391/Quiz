@@ -2,8 +2,11 @@ package com.m391.quiz.utils
 
 import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.media.MediaMetadataRetriever
+import android.net.Uri
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
@@ -11,6 +14,7 @@ import android.widget.ImageView
 import android.widget.SeekBar
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
@@ -62,7 +66,7 @@ object Binding {
         circularProgressDrawable.centerRadius = 30f
         circularProgressDrawable.setColorSchemeColors(Color.TRANSPARENT)
         circularProgressDrawable.start()
-        Picasso.get().load(imageUrl)
+        Picasso.get().load(imageUrl.toUri())
             .placeholder(circularProgressDrawable)
             .into(imageView)
     }
@@ -70,7 +74,27 @@ object Binding {
     @BindingAdapter("android:profileImage")
     @JvmStatic
     fun loadProfileImage(imageView: ImageView, imageUrl: String?) {
-        if (imageUrl == null) imageView.setImageResource(R.mipmap.person)
+        if (imageUrl == null)
+            imageView.setImageResource(R.mipmap.person)
         else loadImage(imageView, imageUrl)
+    }
+
+    @BindingAdapter("android:placeholderImage")
+    @JvmStatic
+    fun loadPlaceholderImage(imageView: ImageView, imageUrl: String?) {
+        if (imageUrl == null)
+            imageView.setImageResource(R.mipmap.quiz_placeholder)
+        else loadImage(imageView, imageUrl)
+    }
+
+    @BindingAdapter("android:placeholderImageByteArray")
+    @JvmStatic
+    fun loadPlaceholderImageByteArray(imageView: ImageView, imageUrl: ByteArray) {
+        val image = convertByteArrayToBitmap(imageUrl)
+        imageView.setImageBitmap(image)
+    }
+
+    private fun convertByteArrayToBitmap(byteArray: ByteArray): Bitmap {
+        return BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
     }
 }

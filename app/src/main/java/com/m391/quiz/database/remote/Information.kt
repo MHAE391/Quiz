@@ -69,4 +69,24 @@ class Information(private val auth: Authentication, private val media: MediaStor
                 .build()
             user?.updateProfile(profileUpdates)!!.await()
         }
+
+    suspend fun checkAlreadyTeacherOrNot(): Boolean = withContext(Dispatchers.IO) {
+        val currentUser = auth.getCurrentUser()
+        if (currentUser != null) {
+            val teacherUid = currentUser.uid
+            val response = firestore.collection(TEACHERS).document(teacherUid).get().await()
+            return@withContext response.exists()
+        }
+        return@withContext false
+    }
+
+    suspend fun checkAlreadyStudentOrNot(): Boolean = withContext(Dispatchers.IO) {
+        val currentUser = auth.getCurrentUser()
+        if (currentUser != null) {
+            val teacherUid = currentUser.uid
+            val response = firestore.collection(STUDENTS).document(teacherUid).get().await()
+            return@withContext response.exists()
+        }
+        return@withContext false
+    }
 }

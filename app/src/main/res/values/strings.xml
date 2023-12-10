@@ -75,4 +75,19 @@
         <item>Science</item>
         <item>Geography</item>
     </string-array>
+
+    <string name="create_new_quiz">Create New Quiz</string>
+    <string name="quiz_information">Quiz Information</string>
+    <string name="quiz_placeholder">Quiz Placeholder</string>
+    <string name="academic_subject">Select Academic Subject</string>
+    <string name="duration">Duration</string>
+    <string name="select_quiz_duration">Select Quiz Duration</string>
+    <string name="description">Quiz Description</string>
+    <string name="create">Create</string>
+    <string name="type_profile">Profile</string>
+    <string name="type_placeholder">Placeholder</string>
+
+    <string name="select_quiz_subject">selectQuizSubject</string>
+    <string name="select_quiz_year">selectQuizAcademicYear</string>
+    <string name="uncompleted_quizzes">UnCompleted Quizzes</string>
 </resources>

@@ -34,4 +34,5 @@
     <dimen name="margin_85">85dp</dimen>
     <dimen name="padding_25">25dp</dimen>
     <dimen name="font_size_24">24sp</dimen>
+    <dimen name="padding_15">15dp</dimen>
 </resources>

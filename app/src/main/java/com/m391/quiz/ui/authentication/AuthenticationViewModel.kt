@@ -11,6 +11,7 @@ import com.google.firebase.auth.FirebaseAuthMissingActivityForRecaptchaException
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthProvider
 import com.m391.quiz.database.remote.Authentication
+import com.m391.quiz.database.remote.Information
 import com.m391.quiz.ui.shared.BaseViewModel
 import com.m391.quiz.utils.Statics.EMPTY_PHONE_NUMBER
 import com.m391.quiz.utils.Statics.INVALID_PHONE_NUMBER
@@ -18,12 +19,15 @@ import com.m391.quiz.utils.Statics.RESPONSE_INVALID_REQUEST
 import com.m391.quiz.utils.Statics.RESPONSE_RECAPTCHA_WITH_NULL_ACTIVITY
 import com.m391.quiz.utils.Statics.RESPONSE_SMS_LIMIT_EXCEEDED
 import com.m391.quiz.utils.Statics.RESPONSE_SUCCESS
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
 class AuthenticationViewModel(
     private val app: Application,
-    private val authentication: Authentication
+    private val authentication: Authentication,
+    private val information: Information
 ) :
     BaseViewModel(app) {
     private val _response = MutableLiveData<String>()
@@ -36,7 +40,6 @@ class AuthenticationViewModel(
     }
 
     private val _resendToken = MutableLiveData<PhoneAuthProvider.ForceResendingToken>()
-    val resendToken: LiveData<PhoneAuthProvider.ForceResendingToken> = _resendToken
 
     val getOTPCode: suspend (String?, Activity) -> Unit =
         { phoneNumber, activity ->
@@ -45,7 +48,7 @@ class AuthenticationViewModel(
     val resendCode: suspend (String, Activity) -> Unit = { phoneNumber, activity ->
         authentication.resendVerificationCode(
             "+2$phoneNumber",
-            resendToken.value!!,
+            _resendToken.value!!,
             otpCallback,
             activity
         )
@@ -97,5 +100,14 @@ class AuthenticationViewModel(
             _response.postValue(RESPONSE_SUCCESS)
         }
     }
-
+    val checkIfTeacher: suspend () -> Boolean = {
+        withContext(Dispatchers.IO) {
+            return@withContext information.checkAlreadyTeacherOrNot()
+        }
+    }
+    val checkIfStudent: suspend () -> Boolean = {
+        withContext(Dispatchers.IO) {
+            return@withContext information.checkAlreadyStudentOrNot()
+        }
+    }
 }

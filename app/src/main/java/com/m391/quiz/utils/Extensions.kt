@@ -18,10 +18,14 @@ fun <T> RecyclerView.setupGridRecycler(
 }
 
 fun <T> RecyclerView.setupLinearRecycler(
-    adapter: BaseRecyclerViewAdapter<T>
+    adapter: BaseRecyclerViewAdapter<T>,
+    verticalOrHorizontal: Boolean
 ) {
     this.apply {
-        layoutManager = LinearLayoutManager(this.context)
+        layoutManager =
+            if (verticalOrHorizontal)
+                LinearLayoutManager(this.context)
+            else LinearLayoutManager(this.context, LinearLayoutManager.HORIZONTAL, false)
         this.adapter = adapter
     }
 }
@@ -49,6 +53,7 @@ fun String.m391Capitalize(): String {
     return this.replaceFirstChar {
         if (it.isLowerCase()) it.titlecase(
             Locale.getDefault()
-        ) else it.toString()
+        ).trim()
+        else it.toString().trim()
     }
 }

@@ -16,6 +16,8 @@ import com.m391.quiz.ui.authentication.AuthenticationViewModel
 import com.m391.quiz.ui.authentication.AuthenticationViewModelFactory
 import com.m391.quiz.ui.authentication.information.InformationActivity
 import com.m391.quiz.ui.shared.BaseFragment
+import com.m391.quiz.ui.student.StudentActivity
+import com.m391.quiz.ui.teacher.TeacherActivity
 import com.m391.quiz.utils.Statics.CODE_SENT
 import com.m391.quiz.utils.Statics.RESPONSE_SUCCESS
 import com.m391.quiz.utils.Statics.SUCCESSFUL_LOGIN
@@ -29,7 +31,11 @@ class OTPVerificationFragment : BaseFragment() {
     }
     private val args: OTPVerificationFragmentArgs by navArgs()
     private val authenticationViewModel: AuthenticationViewModel by activityViewModels {
-        AuthenticationViewModelFactory(requireActivity().application, remoteDatabase.authentication)
+        AuthenticationViewModelFactory(
+            requireActivity().application,
+            remoteDatabase.authentication,
+            remoteDatabase.information
+        )
     }
     override val viewModel: OTPVerificationViewModel by viewModels {
         OTPVerificationViewModelFactory(
@@ -60,8 +66,18 @@ class OTPVerificationFragment : BaseFragment() {
         super.onResume()
         viewModel.response.observe(viewLifecycleOwner) { response ->
             if (response == SUCCESSFUL_LOGIN) {
-                startActivity(Intent(requireActivity(), InformationActivity::class.java))
-                requireActivity().finish()
+                lifecycleScope.launch {
+                    if (authenticationViewModel.checkIfTeacher()) {
+                        startActivity(Intent(requireActivity(), TeacherActivity::class.java))
+                        requireActivity().finish()
+                    } else if (authenticationViewModel.checkIfStudent()) {
+                        startActivity(Intent(requireActivity(), StudentActivity::class.java))
+                        requireActivity().finish()
+                    } else {
+                        startActivity(Intent(requireActivity(), InformationActivity::class.java))
+                        requireActivity().finish()
+                    }
+                }
             } else if (response == RESPONSE_SUCCESS) {
                 viewModel.showToast(CODE_SENT)
                 viewModel.resetData()

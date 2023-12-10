@@ -38,6 +38,7 @@
                     android:contentDescription="@string/profile_image"
                     android:padding="@dimen/padding_10"
                     android:profileImage="@{viewModel.teacherProfileImage}"
+                    android:scaleType="centerCrop"
                     android:src="@mipmap/person" />
 
                 <LinearLayout

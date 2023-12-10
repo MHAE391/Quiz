@@ -1,12 +1,9 @@
 package com.m391.quiz.ui.authentication.information.student
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
@@ -15,14 +12,10 @@ import androidx.lifecycle.lifecycleScope
 import com.m391.quiz.R
 import com.m391.quiz.databinding.FragmentStudentInformationBinding
 import com.m391.quiz.ui.authentication.information.InformationViewModel
-import com.m391.quiz.ui.authentication.information.InformationViewModelFactory
 import com.m391.quiz.ui.authentication.information.setDateOfBarth
-import com.m391.quiz.ui.authentication.information.shared.AcademicSubjectsFragment
-import com.m391.quiz.ui.authentication.information.shared.AcademicYearsFragment
+import com.m391.quiz.ui.shared.bottom_sheets.AcademicSubjectsFragment
+import com.m391.quiz.ui.shared.bottom_sheets.AcademicYearsFragment
 import com.m391.quiz.ui.shared.BaseFragment
-import com.m391.quiz.ui.shared.BaseViewModel
-import com.m391.quiz.utils.Binding
-import com.m391.quiz.utils.Statics
 import com.m391.quiz.utils.Statics.RESPONSE_SUCCESS
 import kotlinx.coroutines.launch
 
@@ -32,7 +25,7 @@ class StudentInformationFragment() : BaseFragment() {
         FragmentStudentInformationBinding.inflate(layoutInflater)
     }
     private val informationViewModel: InformationViewModel by activityViewModels()
-    override val viewModel: StudentInformationViewModel by activityViewModels {
+    override val viewModel: StudentInformationViewModel by viewModels {
         StudentInformationViewModelFactory(
             requireActivity().application,
             informationViewModel.uploadUserData
@@ -87,12 +80,22 @@ class StudentInformationFragment() : BaseFragment() {
     }
 
     private fun showSelectSubjectsFragment() {
-        val fragment = AcademicSubjectsFragment()
+        val fragment = AcademicSubjectsFragment(
+            selectItem = viewModel.selectSubject,
+            unSelectItem = viewModel.unSelectSubject,
+            selectedItems = viewModel.studentSubjects,
+            checkBoxOrRadioButton = true
+        )
         fragment.show(parentFragmentManager, getString(R.string.select_student_subjects))
     }
 
     private fun showSelectAcademicYearFragment() {
-        val fragment = AcademicYearsFragment()
+        val fragment = AcademicYearsFragment(
+            selectItem = viewModel.selectYear,
+            unSelectItem = viewModel.unSelectSubject,
+            selectedItems = viewModel.studentYear,
+            checkBoxOrRadioButton = false
+        )
         fragment.show(parentFragmentManager, getString(R.string.select_student_academic))
     }
 

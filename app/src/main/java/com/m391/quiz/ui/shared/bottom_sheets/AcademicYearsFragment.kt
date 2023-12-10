@@ -1,4 +1,4 @@
-package com.m391.quiz.ui.authentication.information.shared
+package com.m391.quiz.ui.shared.bottom_sheets
 
 import android.app.Dialog
 import android.content.res.Resources
@@ -8,33 +8,33 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.LiveData
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.m391.quiz.R
-import com.m391.quiz.databinding.FragmentAcademicSubjectsBinding
+import com.m391.quiz.databinding.FragmentAcademicYearsBinding
 import com.m391.quiz.ui.authentication.information.student.StudentInformationViewModel
 import com.m391.quiz.ui.authentication.information.teacher.TeacherInformationViewModel
 import com.m391.quiz.utils.setupLinearRecycler
 
+class AcademicYearsFragment(
+    private val selectedItems: LiveData<List<String>>,
+    private val selectItem: (String) -> Unit,
+    private val unSelectItem: (String) -> Unit,
+    private val checkBoxOrRadioButton: Boolean
+) : BottomSheetDialogFragment() {
 
-class AcademicSubjectsFragment : BottomSheetDialogFragment() {
-
-    private val binding: FragmentAcademicSubjectsBinding by lazy {
-        FragmentAcademicSubjectsBinding.inflate(layoutInflater)
+    private val binding: FragmentAcademicYearsBinding by lazy {
+        FragmentAcademicYearsBinding.inflate(layoutInflater)
     }
-    private val studentInformationViewModel: StudentInformationViewModel by activityViewModels()
-    private val teacherInformationViewModel: TeacherInformationViewModel by activityViewModels()
+
     val viewModel: AcademicYearsAndSubjectsViewModel by viewModels {
-        val teacherOrStudent = this.tag == getString(R.string.select_student_subjects)
         AcademicYearsAndSubjectsViewModelFactory(
             requireActivity().application,
-            if (teacherOrStudent) studentInformationViewModel.studentSubjects
-            else teacherInformationViewModel.teacherSubjects,
-            if (teacherOrStudent) studentInformationViewModel.selectSubject
-            else teacherInformationViewModel.selectSubject,
-            if (teacherOrStudent) studentInformationViewModel.unSelectSubject
-            else teacherInformationViewModel.unSelectSubject
+            selectedItems,
+            selectItem,
+            unSelectItem
         )
     }
     private lateinit var dialog: BottomSheetDialog
@@ -74,15 +74,18 @@ class AcademicSubjectsFragment : BottomSheetDialogFragment() {
     }
 
     private fun setUpRecyclerView() {
-        val adapter = ItemAdapter(true) { item ->
-            if (item.isChecked) viewModel.setItemChecked(item)
-            else viewModel.setItemUnChecked(item)
+        val adapter = ItemAdapter(checkBoxOrRadioButton) { item ->
+            if (checkBoxOrRadioButton) {
+                if (item.isChecked) viewModel.setItemChecked(item)
+                else viewModel.setItemUnChecked(item)
+            } else viewModel.setYearItemChecked(item)
         }
-        binding.subjectsRecycler.setupLinearRecycler(adapter)
+        binding.subjectsRecycler.setupLinearRecycler(adapter, true)
     }
 
     override fun onResume() {
         super.onResume()
-        viewModel.refreshSubjectData()
+        viewModel.refreshAcademicYearsData()
     }
+
 }

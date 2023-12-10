@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.m391.quiz.ui.teacher.home.TeacherHomeViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        tools:context=".ui.teacher.home.TeacherHomeFragment">
+
+        <RelativeLayout
+            android:id="@+id/header_title"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="@dimen/margin_20"
+            android:layout_marginTop="@dimen/padding_5"
+            android:layout_marginEnd="@dimen/margin_20"
+            android:orientation="horizontal"
+            android:padding="@dimen/padding_5">
+
+            <TextView
+                android:id="@+id/text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="@string/app_name"
+                android:textColor="@color/black"
+                android:textSize="@dimen/font_size_20"
+                android:textStyle="italic|bold"
+                android:visibility="visible"
+                tools:ignore="RelativeOverlap" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_below="@id/text"
+                android:layout_marginStart="@dimen/margin_20"
+                android:layout_marginEnd="@dimen/margin_20"
+                android:background="@color/border_color" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/un_completed_quizzes_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/header_title"
+            android:layout_margin="@dimen/margin_10"
+            android:background="@drawable/borders"
+            android:orientation="vertical"
+            android:padding="@dimen/padding_10">
+
+            <TextView
+                android:id="@+id/un_completed_quizzes_text"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:padding="@dimen/padding_10"
+                android:text="@string/uncompleted_quizzes"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/font_size_20"
+                android:textStyle="italic|bold" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/un_completed_quizzes_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/borders"
+                android:liveData="@{viewModel.unCompletedQuizzes}"
+                android:orientation="horizontal"
+                android:padding="@dimen/padding_5"
+                android:scrollbars="none" />
+        </LinearLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/create_new_quiz"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="20dp"
+            android:alpha="0.8"
+            android:contentDescription="@string/create_new_quiz"
+            android:foregroundGravity="center"
+            android:scaleType="center"
+            android:src="@mipmap/create_new_quiz"
+            android:visibility="visible"
+            app:backgroundTint="@color/color_rose"
+            app:fabCustomSize="64dp"
+            app:fabSize="normal"
+            app:layout_anchorGravity="bottom|right|end"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:maxImageSize="45dp"
+            tools:ignore="ContentDescription" />
+
+    </RelativeLayout>
+</layout>

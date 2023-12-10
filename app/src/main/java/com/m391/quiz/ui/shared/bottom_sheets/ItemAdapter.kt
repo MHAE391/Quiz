@@ -1,4 +1,4 @@
-package com.m391.quiz.ui.authentication.information.shared
+package com.m391.quiz.ui.shared.bottom_sheets
 
 import android.annotation.SuppressLint
 import android.widget.CheckBox

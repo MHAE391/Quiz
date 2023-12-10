@@ -36,4 +36,11 @@ object Statics {
     const val EMPTY_ACADEMIC_YEARS = "Please, Select Your Academic Years"
     const val EMPTY_ACADEMIC_SUBJECTS = "Please, Select Your Academic Subjects"
     const val EMPTY_DATE_OF_BARTH = "Please, Select Your Date Of Barth"
+
+    const val EMPTY_QUIZ_PLACEHOLDER_IMAGE = "Please, Choose Quiz Placeholder"
+    const val EMPTY_QUIZ_ACADEMIC_YEAR = "Please, Select Quiz Academic Year"
+    const val EMPTY_QUIZ_ACADEMIC_SUBJECTS = "Please, Select Quiz Academic Subject"
+    const val EMPTY_QUIZ_DURATION = "Please, Select Quiz Duration"
+    const val EMPTY_QUIZ_DESCRIPTION = "Please, Enter Quiz Description"
+
 }

@@ -1,10 +1,9 @@
-package com.m391.quiz.ui.authentication.information.shared
+package com.m391.quiz.ui.shared.bottom_sheets
 
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.m391.quiz.ui.authentication.otp.OTPVerificationViewModel
 
 class AcademicYearsAndSubjectsViewModelFactory(
     private val app: Application,

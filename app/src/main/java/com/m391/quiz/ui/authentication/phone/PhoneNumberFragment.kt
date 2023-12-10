@@ -21,7 +21,11 @@ class PhoneNumberFragment : BaseFragment() {
         FragmentPhoneNumberBinding.inflate(layoutInflater)
     }
     private val authenticationViewModel: AuthenticationViewModel by activityViewModels {
-        AuthenticationViewModelFactory(requireActivity().application, remoteDatabase.authentication)
+        AuthenticationViewModelFactory(
+            requireActivity().application,
+            remoteDatabase.authentication,
+            remoteDatabase.information
+        )
     }
     override val viewModel: PhoneNumberViewModel by viewModels {
         PhoneNumberViewModelFactory(
