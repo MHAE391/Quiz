@@ -68,6 +68,9 @@ class AcademicSubjectsFragment(
     override fun onStart() {
         super.onStart()
         setUpRecyclerView()
+        binding.arrowBtn.setOnClickListener {
+            this@AcademicSubjectsFragment.dismiss()
+        }
     }
 
     private fun setUpRecyclerView() {
@@ -80,7 +83,7 @@ class AcademicSubjectsFragment(
             } else
                 viewModel.setSubjectItemChecked(item)
         }
-        binding.subjectsRecycler.setupLinearRecycler(adapter ,true)
+        binding.subjectsRecycler.setupLinearRecycler(adapter, true)
     }
 
     override fun onResume() {

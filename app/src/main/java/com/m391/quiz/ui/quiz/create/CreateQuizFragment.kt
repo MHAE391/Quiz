@@ -1,4 +1,4 @@
-package com.m391.quiz.ui.teacher.quiz.create
+package com.m391.quiz.ui.quiz.create
 
 import android.app.TimePickerDialog
 import android.os.Bundle
@@ -18,8 +18,8 @@ import com.m391.quiz.R
 import com.m391.quiz.database.local.repositories.QuizRepository
 import com.m391.quiz.ui.shared.bottom_sheets.AcademicSubjectsFragment
 import com.m391.quiz.ui.shared.bottom_sheets.AcademicYearsFragment
-import com.m391.quiz.ui.teacher.TeacherViewModel
-import com.m391.quiz.ui.teacher.TeacherViewModelFactory
+import com.m391.quiz.ui.quiz.QuizViewModel
+import com.m391.quiz.ui.quiz.QuizViewModelFactory
 import com.m391.quiz.utils.Statics.RESPONSE_SUCCESS
 import kotlinx.coroutines.launch
 
@@ -29,8 +29,8 @@ class CreateQuizFragment : BaseFragment() {
     private val binding: FragmentCreateQuizBinding by lazy {
         FragmentCreateQuizBinding.inflate(layoutInflater)
     }
-    private val teacherViewModel: TeacherViewModel by activityViewModels {
-        TeacherViewModelFactory(requireActivity().application, QuizRepository(requireContext()))
+    private val teacherViewModel: QuizViewModel by activityViewModels {
+        QuizViewModelFactory(requireActivity().application, QuizRepository(requireContext()))
     }
     override val viewModel: CreateQuizViewModel by viewModels {
         CreateQuizViewModelFactory(
@@ -70,6 +70,9 @@ class CreateQuizFragment : BaseFragment() {
         binding.quizAcademicYear.setOnClickListener {
             showSelectAcademicYearFragment()
         }
+        binding.arrowBtn.setOnClickListener {
+            findNavController().popBackStack()
+        }
         binding.createQuiz.setOnClickListener {
             disableUI()
             lifecycleScope.launch {
@@ -93,8 +96,7 @@ class CreateQuizFragment : BaseFragment() {
         val timePickerDialog = TimePickerDialog(
             requireContext(),
             { _, selectedHour, selectedMinute ->
-
-                val selectedTime = "Selected Time = $selectedHour:$selectedMinute"
+                val selectedTime = "Selected Time = $selectedHour : $selectedMinute"
                 val time = convertTimeToMilliseconds(selectedHour, selectedMinute)
                 viewModel.setQuizDuration(selectedTime, time)
             },

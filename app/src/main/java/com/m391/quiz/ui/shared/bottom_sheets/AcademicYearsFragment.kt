@@ -71,6 +71,9 @@ class AcademicYearsFragment(
     override fun onStart() {
         super.onStart()
         setUpRecyclerView()
+        binding.arrowBtn.setOnClickListener {
+            this@AcademicYearsFragment.dismiss()
+        }
     }
 
     private fun setUpRecyclerView() {

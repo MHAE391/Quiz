@@ -6,10 +6,11 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.m391.quiz.database.local.entities.DateConverter
+import com.m391.quiz.database.local.entities.Question
 import com.m391.quiz.database.local.entities.Quiz
 import com.m391.quiz.database.local.room.dao.QuizDAO
 
-@Database(entities = [Quiz::class], version = 1)
+@Database(entities = [Quiz::class, Question::class], version = 1)
 @TypeConverters(DateConverter::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun quizDao(): QuizDAO
@@ -22,7 +23,7 @@ abstract class AppDatabase : RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     AppDatabase::class.java,
-                    "quiz_trrrsssy_database"
+                    "quizz_trrrsssspy_database"
                 ).build()
                 INSTANCE = instance
                 instance

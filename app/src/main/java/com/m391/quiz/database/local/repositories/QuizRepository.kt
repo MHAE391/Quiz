@@ -1,6 +1,7 @@
 package com.m391.quiz.database.local.repositories
 
 import android.content.Context
+import com.m391.quiz.database.local.entities.Question
 import com.m391.quiz.database.local.entities.Quiz
 import com.m391.quiz.database.local.interfaces.QuizInterface
 import com.m391.quiz.database.local.room.database.AppDatabase
@@ -33,6 +34,31 @@ class QuizRepository(
     override suspend fun deleteAllQuizzes() = withContext(dispatcher) {
         quizDAO.deleteAllQuizzes()
     }
+
+    override suspend fun getAllQuizQuestions(quizId: Int): List<Question> =
+        withContext(dispatcher) {
+            return@withContext quizDAO.getAllQuizQuestions(quizId)
+        }
+
+    override suspend fun insertQuestion(question: Question) =
+        withContext(dispatcher) {
+            quizDAO.insertQuestion(question)
+        }
+
+    override suspend fun deleteQuestion(question: Question) =
+        withContext(dispatcher) {
+            quizDAO.deleteQuestion(question)
+        }
+
+    override suspend fun deleteAllQuestions() =
+        withContext(dispatcher) {
+            quizDAO.deleteAllQuestions()
+        }
+
+    override suspend fun getQuestionById(questionId: Int): Question? =
+        withContext(dispatcher) {
+            return@withContext quizDAO.getQuestionById(questionId)
+        }
 
 
 }

@@ -11,8 +11,9 @@ import androidx.navigation.fragment.findNavController
 import com.m391.quiz.database.local.repositories.QuizRepository
 import com.m391.quiz.databinding.FragmentTeacherHomeBinding
 import com.m391.quiz.ui.shared.BaseFragment
-import com.m391.quiz.ui.teacher.TeacherViewModel
-import com.m391.quiz.ui.teacher.TeacherViewModelFactory
+import com.m391.quiz.ui.quiz.QuizViewModel
+import com.m391.quiz.ui.quiz.QuizViewModelFactory
+import com.m391.quiz.utils.Statics.TYPE_TEACHER
 import com.m391.quiz.utils.setupLinearRecycler
 import kotlinx.coroutines.launch
 
@@ -21,8 +22,8 @@ class TeacherHomeFragment : BaseFragment() {
     private val binding: FragmentTeacherHomeBinding by lazy {
         FragmentTeacherHomeBinding.inflate(layoutInflater)
     }
-    private val teacherViewModel: TeacherViewModel by activityViewModels {
-        TeacherViewModelFactory(requireActivity().application, QuizRepository(requireContext()))
+    private val teacherViewModel: QuizViewModel by activityViewModels {
+        QuizViewModelFactory(requireActivity().application, QuizRepository(requireContext()))
     }
     override val viewModel: TeacherHomeViewModel by viewModels {
         TeacherHomeViewModelFactory(requireActivity().application, teacherViewModel.getAllQuizzes)
@@ -46,8 +47,14 @@ class TeacherHomeFragment : BaseFragment() {
     }
 
     private fun setupRecyclerView() {
-        val adapter = QuizzesAdapter {
-            binding.unCompletedQuizzesText.text = it.image.toString()
+        val adapter = QuizzesAdapter { quiz ->
+            findNavController().navigate(
+                TeacherHomeFragmentDirections
+                    .actionTeacherHomeFragmentToPreviewQuizFragment(
+                        quiz.id,
+                        TYPE_TEACHER
+                    )
+            )
         }
         binding.unCompletedQuizzesRecycler.setupLinearRecycler(adapter, false)
     }

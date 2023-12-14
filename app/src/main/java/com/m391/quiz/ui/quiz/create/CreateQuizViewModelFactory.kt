@@ -1,4 +1,4 @@
-package com.m391.quiz.ui.teacher.quiz.create
+package com.m391.quiz.ui.quiz.create
 
 import android.app.Application
 import androidx.lifecycle.ViewModel

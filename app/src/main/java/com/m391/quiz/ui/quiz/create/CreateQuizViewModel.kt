@@ -1,4 +1,4 @@
-package com.m391.quiz.ui.teacher.quiz.create
+package com.m391.quiz.ui.quiz.create
 
 import android.app.Application
 import android.content.ContentResolver
@@ -125,8 +125,8 @@ class CreateQuizViewModel(
         return if (quizPlaceholder.value.isNullOrEmpty()) EMPTY_QUIZ_PLACEHOLDER_IMAGE
         else if (quizAcademicSubject.value.equals(app.getString(R.string.academic_subject))) EMPTY_QUIZ_ACADEMIC_SUBJECTS
         else if (quizAcademicYear.value.equals(app.getString(R.string.academic_year))) EMPTY_QUIZ_ACADEMIC_YEAR
-        else if (quizDurationString.value.equals(app.getString(R.string.duration))) EMPTY_QUIZ_DURATION
-        else if (quizDescription.value.isNullOrEmpty()) EMPTY_QUIZ_DESCRIPTION
+        else if (quizDurationString.value.equals(app.getString(R.string.select_quiz_duration))) EMPTY_QUIZ_DURATION
+        else if (quizDescription.value.isNullOrEmpty() || quizDescription.value.isNullOrBlank()) EMPTY_QUIZ_DESCRIPTION
         else VALID_DATA
     }
 }

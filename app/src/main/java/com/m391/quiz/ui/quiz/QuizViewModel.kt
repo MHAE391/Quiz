@@ -1,14 +1,14 @@
-package com.m391.quiz.ui.teacher
+package com.m391.quiz.ui.quiz
 
 import android.app.Application
-import androidx.lifecycle.viewModelScope
+import com.m391.quiz.database.local.entities.Question
 import com.m391.quiz.database.local.entities.Quiz
 import com.m391.quiz.database.local.interfaces.QuizInterface
 import com.m391.quiz.ui.shared.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class TeacherViewModel(private val app: Application, private val quizRepository: QuizInterface) :
+class QuizViewModel(private val app: Application, private val quizRepository: QuizInterface) :
     BaseViewModel(app) {
     val insertQuiz: suspend (Quiz) -> Unit = { quiz ->
         withContext(Dispatchers.IO) {
@@ -47,4 +47,23 @@ class TeacherViewModel(private val app: Application, private val quizRepository:
             }
         }
 
+    val getAllQuizQuestion: suspend (Int) -> List<Question> =
+        { quizId ->
+            withContext(Dispatchers.IO) {
+                return@withContext quizRepository.getAllQuizQuestions(quizId)
+            }
+        }
+
+    val insertQuestion: suspend (Question) -> Unit =
+        { question ->
+            withContext(Dispatchers.IO) {
+                quizRepository.insertQuestion(question)
+            }
+        }
+    val deleteQuestion: suspend (Question) -> Unit =
+        { question ->
+            withContext(Dispatchers.IO) {
+                quizRepository.deleteQuestion(question)
+            }
+        }
 }

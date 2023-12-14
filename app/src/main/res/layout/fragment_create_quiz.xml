@@ -7,14 +7,14 @@
 
         <variable
             name="viewModel"
-            type="com.m391.quiz.ui.teacher.quiz.create.CreateQuizViewModel" />
+            type="com.m391.quiz.ui.quiz.create.CreateQuizViewModel" />
     </data>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
-        tools:context=".ui.teacher.quiz.create.CreateQuizFragment">
+        tools:context=".ui.quiz.create.CreateQuizFragment">
 
         <View
             android:id="@+id/dummyView"
@@ -265,7 +265,6 @@
                             android:layout_marginEnd="@dimen/margin_5"
                             android:background="@drawable/edit_text_view"
                             android:hint="@string/description"
-                            android:text="@={viewModel.quizDescription}"
                             android:importantForAutofill="no"
                             android:inputType="textMultiLine"
                             android:maxLines="8"
@@ -273,6 +272,7 @@
                             android:padding="@dimen/padding_10"
                             android:scrollbarSize="0dp"
                             android:scrollbars="vertical"
+                            android:text="@={viewModel.quizDescription}"
                             android:textSize="@dimen/font_size_16" />
                     </RelativeLayout>
                 </LinearLayout>

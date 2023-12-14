@@ -43,4 +43,15 @@ object Statics {
     const val EMPTY_QUIZ_DURATION = "Please, Select Quiz Duration"
     const val EMPTY_QUIZ_DESCRIPTION = "Please, Enter Quiz Description"
 
+    const val EMPTY_QUESTION_HEADER = "Please, Enter Question Header"
+    const val EMPTY_QUESTION_BODY = "Please, Enter Question Body Text Or Image"
+    const val EMPTY_QUESTION_TYPE = "Please, Choose Question Type"
+    const val EMPTY_QUESTION_SCORE = "Please , Enter Question Score"
+    const val INVALID_QUESTION_SCORE = "Question Score Must Be More Than 0"
+    const val EMPTY_ESSAY_ANSWER = "Please, Choose Essay Answer Body"
+    const val EMPTY_MCQ_FIRST_CHOICE = "Please ,Enter First Answer Text Or Image"
+    const val EMPTY_MCQ_SECOND_CHOICE = "Please ,Enter Second Answer Text Or Image"
+    const val EMPTY_MCQ_THIRD_CHOICE = "Please ,Enter Third Answer Text Or Image"
+    const val EMPTY_MCQ_FOURTH_CHOICE = "Please ,Enter Fourth Answer Text Or Image"
+
 }

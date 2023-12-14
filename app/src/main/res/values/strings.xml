@@ -90,4 +90,45 @@
     <string name="select_quiz_subject">selectQuizSubject</string>
     <string name="select_quiz_year">selectQuizAcademicYear</string>
     <string name="uncompleted_quizzes">UnCompleted Quizzes</string>
+    <string name="create_new_question">Create New Question</string>
+    <string name="upload_quiz_to_server">Upload Quiz To Server</string>
+    <string name="quiz_content">Quiz Content</string>
+    <string name="question_information">Question Information</string>
+    <string name="question_header">Question Header ?</string>
+    <string name="question_body">Question body</string>
+    <string name="question_image_body">Question Image Body</string>
+    <string name="select_question_body_image">Select Question Body Image</string>
+    <string name="body_image">Body Image</string>
+    <string name="answer_type">Answer Type</string>
+    <string name="type">Type</string>
+    <string name="text_answer">Text Answer</string>
+    <string name="image_answer">Image Answer</string>
+    <string name="first_answer_text">First Answer Text</string>
+    <string name="first_answer">First Answer</string>
+    <string name="select_first_answer_image">Select First Answer Image</string>
+    <string name="second_answer_text">Second Answer Text</string>
+    <string name="second_answer">Second Answer</string>
+    <string name="select_second_answer_image">Select Second Answer Image</string>
+
+    <string name="third_answer_text">Third Answer Text</string>
+    <string name="third_answer">Third Answer</string>
+    <string name="select_third_answer_image">Select Third Answer Image</string>
+
+    <string name="fourth_answer_text">Fourth Answer Text</string>
+    <string name="fourth_answer">Fourth Answer</string>
+    <string name="select_fourth_answer_image">Select Fourth Answer Image</string>
+    <string name="preview">Preview</string>
+    <string name="question_score">Question Score</string>
+    <string name="score">Score</string>
+    <string name="answer_body">Answer Body Text …</string>
+    <string name="select_answer_body_image">Select Answer Body Image</string>
+    <string name="mcq_answer_image">MCQ Answer Image</string>
+    <string name="reset">reset</string>
+    <string-array name="answer_type">
+        <item>MCQ</item>
+        <item>Essay</item>
+    </string-array>
+    <string name="teacher_database">Teacher Navigation Database</string>
+    <string name="teacher_create">Teacher Navigation Create</string>
+
 </resources>
