@@ -17,7 +17,7 @@ class QuizViewModel(private val app: Application, private val quizRepository: Qu
     }
 
 
-    val deleteQuiz: suspend (Int) -> Unit = { quizId ->
+    val deleteQuiz: suspend (String) -> Unit = { quizId ->
         withContext(Dispatchers.IO) {
             val quiz = getQuizById(quizId)
             quiz?.apply {
@@ -33,7 +33,7 @@ class QuizViewModel(private val app: Application, private val quizRepository: Qu
             }
         }
 
-    val getQuizById: suspend (quizId: Int) -> Quiz? =
+    val getQuizById: suspend (quizId: String) -> Quiz? =
         { quizId ->
             withContext(Dispatchers.IO) {
                 return@withContext quizRepository.getQuizById(quizId)
@@ -47,7 +47,7 @@ class QuizViewModel(private val app: Application, private val quizRepository: Qu
             }
         }
 
-    val getAllQuizQuestion: suspend (Int) -> List<Question> =
+    val getAllQuizQuestion: suspend (String) -> List<Question> =
         { quizId ->
             withContext(Dispatchers.IO) {
                 return@withContext quizRepository.getAllQuizQuestions(quizId)

@@ -26,7 +26,11 @@ class TeacherHomeFragment : BaseFragment() {
         QuizViewModelFactory(requireActivity().application, QuizRepository(requireContext()))
     }
     override val viewModel: TeacherHomeViewModel by viewModels {
-        TeacherHomeViewModelFactory(requireActivity().application, teacherViewModel.getAllQuizzes)
+        TeacherHomeViewModelFactory(
+            requireActivity().application,
+            teacherViewModel.getAllQuizzes,
+            remoteDatabase.quizzes
+        )
     }
 
     override fun onCreateView(
@@ -51,8 +55,7 @@ class TeacherHomeFragment : BaseFragment() {
             findNavController().navigate(
                 TeacherHomeFragmentDirections
                     .actionTeacherHomeFragmentToPreviewQuizFragment(
-                        quiz.id,
-                        TYPE_TEACHER
+                        quiz.id
                     )
             )
         }

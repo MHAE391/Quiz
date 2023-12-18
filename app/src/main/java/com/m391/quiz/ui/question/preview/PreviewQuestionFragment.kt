@@ -17,7 +17,6 @@ import com.m391.quiz.ui.quiz.QuizViewModel
 import com.m391.quiz.ui.quiz.QuizViewModelFactory
 import com.m391.quiz.ui.shared.BaseFragment
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class PreviewQuestionFragment : BaseFragment() {
 
@@ -31,7 +30,7 @@ class PreviewQuestionFragment : BaseFragment() {
     override val viewModel by viewModels<PreviewQuestionViewModel> {
         PreviewQuestionViewModelFactory(
             app = requireActivity().application,
-            question = args.question,
+            questionUIModel = args.question,
             quizViewModel.deleteQuestion
         )
     }

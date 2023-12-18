@@ -27,7 +27,7 @@ class QuizRepository(
         return@withContext quizDAO.getAllQuizzes()
     }
 
-    override suspend fun getQuizById(quizId: Int): Quiz? = withContext(dispatcher) {
+    override suspend fun getQuizById(quizId: String): Quiz? = withContext(dispatcher) {
         return@withContext quizDAO.getQuizById(quizId)
     }
 
@@ -35,7 +35,7 @@ class QuizRepository(
         quizDAO.deleteAllQuizzes()
     }
 
-    override suspend fun getAllQuizQuestions(quizId: Int): List<Question> =
+    override suspend fun getAllQuizQuestions(quizId: String): List<Question> =
         withContext(dispatcher) {
             return@withContext quizDAO.getAllQuizQuestions(quizId)
         }

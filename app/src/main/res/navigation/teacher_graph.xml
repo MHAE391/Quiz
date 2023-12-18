@@ -45,9 +45,6 @@
         tools:layout="@layout/fragment_preview_quiz">
         <argument
             android:name="quizId"
-            app:argType="integer" />
-        <argument
-            android:name="destination"
             app:argType="string" />
         <action
             android:id="@+id/action_previewQuizFragment_to_createQuestionFragment"
@@ -71,7 +68,7 @@
         tools:layout="@layout/fragment_create_question">
         <argument
             android:name="quizId"
-            app:argType="integer" />
+            app:argType="string" />
         <argument
             android:name="questionNumber"
             app:argType="integer" />
@@ -89,12 +86,13 @@
         android:name="com.m391.quiz.ui.question.preview.PreviewQuestionFragment"
         android:label="PreviewQuestionFragment"
         tools:layout="@layout/fragment_preview_question">
-        <argument
-            android:name="question"
-            app:argType="com.m391.quiz.database.local.entities.Question" />
+
         <argument
             android:name="from"
             app:argType="string" />
+        <argument
+            android:name="question"
+            app:argType="com.m391.quiz.models.QuestionUIModel" />
     </fragment>
 
 </navigation>

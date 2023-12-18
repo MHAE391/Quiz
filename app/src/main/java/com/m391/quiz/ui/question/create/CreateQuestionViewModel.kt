@@ -32,7 +32,7 @@ import java.io.IOException
 
 class CreateQuestionViewModel(
     private val app: Application,
-    private val quizId: Int,
+    private val quizId: String,
     private val questionNumber: Int,
     private val insertQuestion: suspend (Question) -> Unit
 ) :
@@ -196,7 +196,6 @@ class CreateQuestionViewModel(
     fun getQuestion(): Question {
         return Question(
             quizId = quizId,
-            number = questionNumber,
             headerText = questionHeader.value!!.m391Capitalize(),
             bodyText = questionBodyText.value?.m391Capitalize(),
             bodyImage = questionBodyImage.value.m391ByteArray(app.contentResolver),

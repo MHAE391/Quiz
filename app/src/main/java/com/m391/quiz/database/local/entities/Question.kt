@@ -4,7 +4,6 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
-import java.io.Serializable
 
 @Entity(
     tableName = "questions",
@@ -18,8 +17,7 @@ import java.io.Serializable
 data class Question(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "question_id") val id: Int = 0,
-    @ColumnInfo(name = "quiz_id") val quizId: Int,
-    @ColumnInfo(name = "question_number") val number: Int,
+    @ColumnInfo(name = "quiz_id") val quizId: String,
     @ColumnInfo(name = "question_header_text") val headerText: String,
     @ColumnInfo(name = "question_body_text") val bodyText: String?,
     @ColumnInfo(name = "question_body_image") val bodyImage: ByteArray?,
@@ -35,7 +33,7 @@ data class Question(
     @ColumnInfo(name = "answer_choices_fourth_text") val answerChoicesFourthText: String?,
     @ColumnInfo(name = "answer_choices_fourth_image") val answerChoicesFourthImage: ByteArray?,
     @ColumnInfo(name = "question_score") val questionScore: Int
-) : Serializable {
+) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false

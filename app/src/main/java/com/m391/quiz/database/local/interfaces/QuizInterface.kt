@@ -7,10 +7,10 @@ interface QuizInterface {
     suspend fun insertQuiz(quiz: Quiz)
     suspend fun deleteQuiz(quiz: Quiz)
     suspend fun getAllQuizzes(): List<Quiz>
-    suspend fun getQuizById(quizId: Int): Quiz?
+    suspend fun getQuizById(quizId: String): Quiz?
     suspend fun deleteAllQuizzes()
 
-    suspend fun getAllQuizQuestions(quizId: Int): List<Question>
+    suspend fun getAllQuizQuestions(quizId: String): List<Question>
     suspend fun getQuestionById(questionId: Int): Question?
     suspend fun insertQuestion(question: Question)
     suspend fun deleteQuestion(question: Question)

@@ -20,4 +20,15 @@ class MediaStorage {
             val imageUri = process.metadata!!.reference!!.downloadUrl.await()
             return@withContext Pair(first = path, second = imageUri)
         }
+
+    suspend fun uploadImageByteArray(image: ByteArray?, reference: String): Pair<String?, String?> =
+        withContext(Dispatchers.IO) {
+            if (image == null) return@withContext Pair(null, null)
+            val path = "${System.currentTimeMillis()}${UUID.randomUUID()}"
+            val process = storageRef.getReference(reference)
+                .child(path)
+                .putBytes(image).asDeferred().await()
+            val imageUri = process.metadata!!.reference!!.downloadUrl.await()
+            return@withContext Pair(first = path, second = imageUri.toString())
+        }
 }

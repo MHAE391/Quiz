@@ -14,6 +14,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.m391.quiz.R
+import com.m391.quiz.database.local.entities.Question
 import com.m391.quiz.database.local.repositories.QuizRepository
 import com.m391.quiz.databinding.FragmentCreateQuestionBinding
 import com.m391.quiz.ui.quiz.QuizViewModel
@@ -21,6 +22,7 @@ import com.m391.quiz.ui.quiz.QuizViewModelFactory
 import com.m391.quiz.ui.shared.BaseFragment
 import com.m391.quiz.utils.Statics.RESPONSE_SUCCESS
 import com.m391.quiz.utils.Statics.VALID_DATA
+import com.m391.quiz.utils.m391UIModel
 import kotlinx.coroutines.launch
 
 class CreateQuestionFragment : BaseFragment() {
@@ -84,7 +86,6 @@ class CreateQuestionFragment : BaseFragment() {
     ): View {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
-
 
         binding.answerType.setText(getString(R.string.type), false)
         return binding.root
@@ -152,12 +153,12 @@ class CreateQuestionFragment : BaseFragment() {
             viewModel.positiveShowLoading()
             val response = viewModel.checkDataValidation()
             if (response == VALID_DATA) {
-                val question = viewModel.getQuestion()
+                val question = viewModel.getQuestion().m391UIModel(args.questionNumber)
                 findNavController().navigate(
                     CreateQuestionFragmentDirections
                         .actionCreateQuestionFragmentToPreviewQuestionFragment(
-                            question,
-                            getString(R.string.teacher_create)
+                            getString(R.string.teacher_create),
+                            question
                         )
                 )
                 viewModel.negativeShowLoading()

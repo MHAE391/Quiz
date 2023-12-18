@@ -11,8 +11,36 @@ import androidx.core.net.toUri
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.m391.quiz.database.local.entities.Question
+import com.m391.quiz.database.local.entities.Quiz
+import com.m391.quiz.models.QuestionFirebaseModel
+import com.m391.quiz.models.QuestionFirebaseUIModel
+import com.m391.quiz.models.QuestionUIModel
+import com.m391.quiz.models.QuizModel
+import com.m391.quiz.utils.Statics.ANSWER_BODY_IMAGE
+import com.m391.quiz.utils.Statics.ANSWER_BODY_TEXT
+import com.m391.quiz.utils.Statics.ANSWER_FIRST_CHOICE_IMAGE_PATH
+import com.m391.quiz.utils.Statics.ANSWER_FIRST_CHOICE_IMAGE_URL
+import com.m391.quiz.utils.Statics.ANSWER_FIRST_CHOICE_TEXT
+import com.m391.quiz.utils.Statics.ANSWER_FOURTH_CHOICE_IMAGE_PATH
+import com.m391.quiz.utils.Statics.ANSWER_FOURTH_CHOICE_IMAGE_URL
+import com.m391.quiz.utils.Statics.ANSWER_FOURTH_CHOICE_TEXT
+import com.m391.quiz.utils.Statics.ANSWER_SECOND_CHOICE_IMAGE_PATH
+import com.m391.quiz.utils.Statics.ANSWER_SECOND_CHOICE_IMAGE_URL
+import com.m391.quiz.utils.Statics.ANSWER_SECOND_CHOICE_TEXT
+import com.m391.quiz.utils.Statics.ANSWER_THIRD_CHOICE_IMAGE_PATH
+import com.m391.quiz.utils.Statics.ANSWER_THIRD_CHOICE_IMAGE_URL
+import com.m391.quiz.utils.Statics.ANSWER_THIRD_CHOICE_TEXT
+import com.m391.quiz.utils.Statics.ANSWER_TYPE
+import com.m391.quiz.utils.Statics.QUESTION_BODY_IMAGE_PATH
+import com.m391.quiz.utils.Statics.QUESTION_BODY_IMAGE_URL
+import com.m391.quiz.utils.Statics.QUESTION_BODY_TEXT
+import com.m391.quiz.utils.Statics.QUESTION_HEADER_TEXT
+import com.m391.quiz.utils.Statics.QUESTION_SCORE
+import com.m391.quiz.utils.Statics.QUIZ_ID
 import java.io.ByteArrayOutputStream
 import java.io.IOException
+import java.util.HashMap
 import java.util.Locale
 
 fun <T> RecyclerView.setupGridRecycler(
@@ -86,7 +114,203 @@ private fun convertImageToByteArray(
     }
 }
 
+fun List<Question>.m391UIModel(): List<QuestionUIModel> {
+    var number = 0
+    return this.map { question ->
+        question.m391UIModel(++number)
+    }
+}
+
+fun Question.m391UIModel(number: Int): QuestionUIModel {
+    return QuestionUIModel(
+        quizId = this.quizId,
+        id = this.id,
+        questionNumber = number,
+        questionScore = this.questionScore,
+        questionBodyText = this.bodyText,
+        questionBodyImage = this.bodyImage,
+        questionHeaderText = this.headerText,
+        answerType = this.answerType,
+        answerBodyImage = this.answerBodyImage,
+        answerBodyText = this.answerBodyText,
+        answerFirstChoiceImage = this.answerChoicesFirstImage,
+        answerFirstChoiceText = this.answerChoicesFirstText,
+        answerSecondChoiceImage = this.answerChoicesSecondImage,
+        answerSecondChoiceText = this.answerChoicesSecondText,
+        answerThirdChoiceImage = this.answerChoicesThirdImage,
+        answerThirdChoiceText = this.answerChoicesThirdText,
+        answerFourthChoiceImage = this.answerChoicesFourthImage,
+        answerFourthChoiceText = this.answerChoicesFourthText
+    )
+}
+
+fun QuestionUIModel.m391DatabaseModel(): Question {
+    return Question(
+        id = this.id,
+        quizId = this.quizId,
+        answerBodyText = this.answerBodyText,
+        answerBodyImage = this.answerBodyImage,
+        answerType = this.answerType,
+        headerText = this.questionHeaderText,
+        bodyText = this.questionBodyText,
+        bodyImage = this.questionBodyImage,
+        questionScore = this.questionScore,
+        answerChoicesFourthImage = this.answerFourthChoiceImage,
+        answerChoicesFourthText = this.answerFourthChoiceText,
+        answerChoicesThirdImage = this.answerThirdChoiceImage,
+        answerChoicesThirdText = this.answerThirdChoiceText,
+        answerChoicesSecondImage = this.answerSecondChoiceImage,
+        answerChoicesSecondText = this.answerSecondChoiceText,
+        answerChoicesFirstText = this.answerFirstChoiceText,
+        answerChoicesFirstImage = this.answerFirstChoiceImage
+    )
+}
+
+fun Quiz.m391RemoteModel(questions: List<QuestionUIModel>): QuizModel {
+    return QuizModel(
+        questions = questions,
+        id = this.id,
+        title = this.title,
+        description = this.description,
+        academicYear = this.academicYear,
+        subject = this.subject,
+        duration = this.duration,
+        creatorUid = this.creatorUid,
+        creationTime = this.creationTime,
+        image = this.image
+    )
+}
+
+fun QuestionUIModel.m391FirebaseModel(
+    bodyImageUrl: String?,
+    bodyImagePath: String?,
+    firstChoiceImageUrl: String?,
+    firstChoiceImagePath: String?,
+    secondChoiceImageUrl: String?,
+    secondChoiceImagePath: String?,
+    thirdChoiceImageUrl: String?,
+    thirdChoiceImagePath: String?,
+    fourthChoiceImageUrl: String?,
+    fourthChoiceImagePath: String?
+): QuestionFirebaseModel {
+    return QuestionFirebaseModel(
+        quiz_id = this.quizId,
+        answer_body_image = this.answerBodyImage,
+        answer_body_text = this.answerBodyText,
+        question_score = this.questionScore,
+        question_body_text = this.questionBodyText,
+        question_header_text = this.questionHeaderText,
+        question_body_image_path = bodyImagePath,
+        question_body_image_url = bodyImageUrl,
+        answer_type = this.answerType,
+        answer_first_choice_image_path = firstChoiceImagePath,
+        answer_first_choice_image_url = firstChoiceImageUrl,
+        answer_second_choice_image_path = secondChoiceImagePath,
+        answer_second_choice_image_url = secondChoiceImageUrl,
+        answer_third_choice_image_path = thirdChoiceImagePath,
+        answer_third_choice_image_url = thirdChoiceImageUrl,
+        answer_fourth_choice_image_path = fourthChoiceImagePath,
+        answer_fourth_choice_image_url = fourthChoiceImageUrl,
+        answer_first_choice_text = this.answerFirstChoiceText,
+        answer_second_choice_text = this.answerSecondChoiceText,
+        answer_third_choice_text = this.answerThirdChoiceText,
+        answer_fourth_choice_text = this.answerFourthChoiceText
+    )
+}
+
+fun List<QuestionUIModel>.m391Score(): Int {
+    var score = 0
+    this.forEach { question ->
+        score += question.questionScore
+    }
+    return score
+}
+
 fun String?.m391ByteArray(contentResolver: ContentResolver): ByteArray? {
     return if (this.isNullOrBlank()) return null
     else convertImageToByteArray(contentResolver, this.toUri())
 }
+
+fun List<HashMap<String, Any>>.m391List(): List<QuestionFirebaseModel> {
+    return this.map { question ->
+        QuestionFirebaseModel(
+            quiz_id = question[QUIZ_ID].toString(),
+            question_score = question[QUESTION_SCORE].toString().toInt(),
+            question_body_image_path = question[QUESTION_BODY_IMAGE_PATH].toString(),
+            question_body_image_url = question[QUESTION_BODY_IMAGE_URL].toString(),
+            question_body_text = question[QUESTION_BODY_TEXT].toString(),
+            question_header_text = question[QUESTION_HEADER_TEXT].toString(),
+            answer_type = question[ANSWER_TYPE].toString(),
+            answer_body_text = question[ANSWER_BODY_TEXT].toString().toBoolean(),
+            answer_body_image = question[ANSWER_BODY_IMAGE].toString().toBoolean(),
+            answer_first_choice_text = question[ANSWER_FIRST_CHOICE_TEXT].toString(),
+            answer_first_choice_image_path = question[ANSWER_FIRST_CHOICE_IMAGE_PATH].toString(),
+            answer_first_choice_image_url = question[ANSWER_FIRST_CHOICE_IMAGE_URL].toString(),
+            answer_second_choice_text = question[ANSWER_SECOND_CHOICE_TEXT].toString(),
+            answer_second_choice_image_path = question[ANSWER_SECOND_CHOICE_IMAGE_PATH].toString(),
+            answer_second_choice_image_url = question[ANSWER_SECOND_CHOICE_IMAGE_URL].toString(),
+            answer_third_choice_text = question[ANSWER_THIRD_CHOICE_TEXT].toString(),
+            answer_third_choice_image_path = question[ANSWER_THIRD_CHOICE_IMAGE_PATH].toString(),
+            answer_third_choice_image_url = question[ANSWER_THIRD_CHOICE_IMAGE_URL].toString(),
+            answer_fourth_choice_text = question[ANSWER_FOURTH_CHOICE_TEXT].toString(),
+            answer_fourth_choice_image_path = question[ANSWER_FOURTH_CHOICE_IMAGE_PATH].toString(),
+            answer_fourth_choice_image_url = question[ANSWER_FOURTH_CHOICE_IMAGE_URL].toString(),
+        )
+    }
+}
+
+fun List<QuestionFirebaseModel>.m391FirebaseUIModel(): List<QuestionFirebaseUIModel> {
+    var number = 0
+    return this.map { question ->
+        QuestionFirebaseUIModel(
+            questionNumber = ++number,
+            quizId = question.quiz_id,
+            questionScore = question.question_score,
+            questionBodyImagePath = question.question_body_image_path,
+            questionBodyImageUrl = question.question_body_image_url,
+            questionBodyText = question.question_body_text,
+            questionHeaderText = question.question_header_text,
+            answerType = question.answer_type,
+            answerBodyText = question.answer_body_text,
+            answerBodyImage = question.answer_body_image,
+            answerFirstChoiceText = question.answer_first_choice_text,
+            answerFirstChoiceImagePath = question.answer_first_choice_image_path,
+            answerFirstChoiceImageUrl = question.answer_first_choice_image_url,
+            answerSecondChoiceText = question.answer_second_choice_text,
+            answerSecondChoiceImagePath = question.answer_second_choice_image_path,
+            answerSecondChoiceImageUrl = question.answer_second_choice_image_url,
+            answerThirdChoiceText = question.answer_third_choice_text,
+            answerThirdChoiceImagePath = question.answer_third_choice_image_path,
+            answerThirdChoiceImageUrl = question.answer_third_choice_image_url,
+            answerFourthChoiceText = question.answer_fourth_choice_text,
+            answerFourthChoiceImagePath = question.answer_fourth_choice_image_path,
+            answerFourthChoiceImageUrl = question.answer_fourth_choice_image_url
+        )
+    }
+}
+/*
+const val QUESTION_HEADER_TEXT = "question_header_text"
+    const val QUESTION_BODY_TEXT = "question_body_text"
+    const val QUESTION_BODY_IMAGE_URL = "question_body_image_url"
+    const val QUESTION_BODY_IMAGE_PATH = "question_body_image_path"
+    const val ANSWER_TYPE = "answer_type"
+    const val ANSWER_BODY_TEXT = "answer_body_text"
+    const val ANSWER_BODY_IMAGE = "answer_body_image"
+    const val ANSWER_FIRST_CHOICE_TEXT = "answer_first_choice_text"
+    const val ANSWER_FIRST_CHOICE_IMAGE_URL = "answer_first_choice_image_url"
+    const val ANSWER_FIRST_CHOICE_IMAGE_PATH = "answer_first_choice_image_path"
+
+    const val ANSWER_SECOND_CHOICE_TEXT = "answer_second_choice_text"
+    const val ANSWER_SECOND_CHOICE_IMAGE_URL = "answer_second_choice_image_url"
+    const val ANSWER_SECOND_CHOICE_IMAGE_PATH = "answer_second_choice_image_path"
+
+    const val ANSWER_THIRD_CHOICE_TEXT = "answer_third_choice_text"
+    const val ANSWER_THIRD_CHOICE_IMAGE_URL = "answer_third_choice_image_url"
+    const val ANSWER_THIRD_CHOICE_IMAGE_PATH = "answer_third_choice_image_path"
+
+    const val ANSWER_FOURTH_CHOICE_TEXT = "answer_fourth_choice_text"
+    const val ANSWER_FOURTH_CHOICE_IMAGE_URL = "answer_fourth_choice_image_url"
+    const val ANSWER_FOURTH_CHOICE_IMAGE_PATH = "answer_fourth_choice_image_path"
+
+    const val QUESTION_SCORE = "question_score"
+ */

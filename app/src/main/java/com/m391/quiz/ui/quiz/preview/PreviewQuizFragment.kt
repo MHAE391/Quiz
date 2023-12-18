@@ -1,7 +1,6 @@
 package com.m391.quiz.ui.quiz.preview
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,8 +15,7 @@ import com.m391.quiz.databinding.FragmentPreviewQuizBinding
 import com.m391.quiz.ui.quiz.QuizViewModel
 import com.m391.quiz.ui.quiz.QuizViewModelFactory
 import com.m391.quiz.ui.shared.BaseFragment
-import com.m391.quiz.ui.shared.BaseViewModel
-import com.m391.quiz.utils.m391Blank
+import com.m391.quiz.utils.Statics.RESPONSE_SUCCESS
 import com.m391.quiz.utils.setupLinearRecycler
 import kotlinx.coroutines.launch
 
@@ -35,7 +33,8 @@ class PreviewQuizFragment : BaseFragment() {
             requireActivity().application,
             quizArgs.quizId,
             quizViewModel.getQuizById,
-            quizViewModel.getAllQuizQuestion
+            quizViewModel.getAllQuizQuestion,
+            remoteDatabase.quizzes
         )
     }
 
@@ -56,9 +55,12 @@ class PreviewQuizFragment : BaseFragment() {
         super.onStart()
         setUpRecyclerView()
         binding.uploadQuiz.setOnClickListener {
-
+            lifecycleScope.launch {
+                viewModel.uploadQuizToFirestore()
+            }
         }
         binding.createNewQuestion.setOnClickListener {
+
             findNavController().navigate(
                 PreviewQuizFragmentDirections.actionPreviewQuizFragmentToCreateQuestionFragment(
                     quizArgs.quizId,
@@ -78,14 +80,29 @@ class PreviewQuizFragment : BaseFragment() {
         lifecycleScope.launch {
             viewModel.refreshQuestions()
         }
+        viewModel.result.observe(viewLifecycleOwner) { response ->
+            if (!response.equals(String())) {
+                viewModel.negativeShowLoading()
+                if (response == RESPONSE_SUCCESS) {
+                    viewModel.showToast(response)
+                    findNavController().popBackStack()
+                } else viewModel.showSnackBar(response, requireView())
+            }
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        viewModel.result.removeObservers(viewLifecycleOwner)
+        viewModel.resetResult()
     }
 
     private fun setUpRecyclerView() {
         val adapter = QuestionAdapter { question ->
             findNavController().navigate(
                 PreviewQuizFragmentDirections.actionPreviewQuizFragmentToPreviewQuestionFragment(
-                    question,
-                    getString(R.string.teacher_database)
+                    getString(R.string.teacher_database),
+                    question
                 )
             )
         }

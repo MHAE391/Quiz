@@ -2,6 +2,7 @@ package com.m391.quiz.utils
 
 import android.animation.Animator
 import android.animation.ValueAnimator
+import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
@@ -9,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.DecelerateInterpolator
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.LiveData
@@ -16,6 +18,9 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.m391.quiz.R
 import com.squareup.picasso.Picasso
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 object Binding {
     @Suppress("UNCHECKED_CAST")
@@ -49,6 +54,16 @@ object Binding {
         }
     }
 
+    @BindingAdapter("android:items_list")
+    @JvmStatic
+    fun loadItems(textView: TextView, items: List<String>) {
+        var itemsString = String()
+        items.forEach { item ->
+            itemsString += "- $item"
+            if (items.indexOf(item) != items.size - 1) itemsString += "\n"
+        }
+        textView.text = itemsString
+    }
 
     @BindingAdapter("android:imageUrl")
     @JvmStatic
@@ -146,5 +161,48 @@ object Binding {
             val bitmap = convertByteArrayToBitmap(image)
             imageView.setImageBitmap(bitmap)
         }
+    }
+
+    @BindingAdapter("android:questionImageUrl")
+    @JvmStatic
+    fun loadQuestionImageUrl(imageView: ImageView, image: String?) {
+        if (image == null) imageView.visibility = View.GONE
+        else {
+            loadPlaceholderImage(imageView, image)
+        }
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    @BindingAdapter("android:date")
+    @JvmStatic
+    fun setDate(textView: TextView, date: Date) {
+        val sdf = SimpleDateFormat("EEEE, MMMM d, yyyy", Locale.getDefault())
+        val time = sdf.format(date)
+        textView.text = time
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    @BindingAdapter("android:time")
+    @JvmStatic
+    fun convertMillisecondsToTime(textView: TextView, ms: Long) {
+        val totalSeconds = ms / 1000
+        val hours = totalSeconds / 3600
+        val minutes = (totalSeconds % 3600) / 60
+        textView.text = String.format("%02d:%02d", hours, minutes)
+    }
+
+    @SuppressLint("SimpleDateFormat", "SetTextI18n")
+    @BindingAdapter("android:time_progress")
+    @JvmStatic
+    fun convertMillisecondsToTimeProgress(textView: TextView, ms: Long) {
+        val seconds = (ms / 1000)
+        val hours = seconds / 3600
+        val minutes = (seconds % 3600) / 60
+        val remainingSeconds = seconds % 60
+
+        val formattedHours = if (hours > 0) "$hours:" else ""
+        val formattedMinutes = String.format("%02d", minutes)
+        val formattedSeconds = String.format("%02d", remainingSeconds)
+        textView.text = "$formattedHours$formattedMinutes:$formattedSeconds"
     }
 }

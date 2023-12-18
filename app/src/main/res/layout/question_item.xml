@@ -5,7 +5,8 @@
 
         <variable
             name="question"
-            type="com.m391.quiz.database.local.entities.Question" />
+            type="com.m391.quiz.models.QuestionUIModel" />
+
     </data>
 
     <RelativeLayout
@@ -21,7 +22,7 @@
             android:layout_centerInParent="true"
             android:gravity="center"
             android:padding="@dimen/padding_5"
-            android:text="@{`Question ` + String.valueOf(question.number)}"
+            android:text="@{`Question ` + String.valueOf(question.questionNumber)}"
             android:textColor="@color/card_view_text" />
 
         <View

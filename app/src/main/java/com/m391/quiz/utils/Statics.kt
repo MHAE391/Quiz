@@ -1,6 +1,9 @@
 package com.m391.quiz.utils
 
 import android.provider.MediaStore
+import androidx.room.ColumnInfo
+import java.util.Calendar
+import java.util.Date
 
 object Statics {
     const val ONE_MEGABYTE: Long = 1024 * 1024
@@ -53,5 +56,47 @@ object Statics {
     const val EMPTY_MCQ_SECOND_CHOICE = "Please ,Enter Second Answer Text Or Image"
     const val EMPTY_MCQ_THIRD_CHOICE = "Please ,Enter Third Answer Text Or Image"
     const val EMPTY_MCQ_FOURTH_CHOICE = "Please ,Enter Fourth Answer Text Or Image"
+
+    const val QUIZZES = "Quizzes"
+    const val QUIZ = "Quiz"
+    const val Question = "Question"
+    const val QUESTIONS = "questions"
+    const val QUIZ_ID = "quiz_id"
+    const val QUIZ_DURATION = "quiz_duration"
+    const val QUIZ_CREATOR = "quiz_creator"
+    const val QUIZ_IMAGE_URL = "quiz_image_url"
+    const val QUIZ_IMAGE_PATH = "quiz_image_path"
+    const val QUIZ_ACADEMIC_YEAR = "quiz_academic_year"
+    const val QUIZ_SUBJECT = "quiz_subject"
+    const val QUIZ_CREATION_TIME = "quiz_creation_time"
+    const val QUIZ_DESCRIPTION = "quiz_description"
+    const val QUIZ_TITLE = "quiz_title"
+    const val QUIZ_SCORE = "quiz_score"
+    const val EMPTY_QUIZ_QUESTION = "Quiz Must Have At Least One Question"
+
+    const val QUESTION_HEADER_TEXT = "question_header_text"
+    const val QUESTION_BODY_TEXT = "question_body_text"
+    const val QUESTION_BODY_IMAGE_URL = "question_body_image_url"
+    const val QUESTION_BODY_IMAGE_PATH = "question_body_image_path"
+    const val ANSWER_TYPE = "answer_type"
+    const val ANSWER_BODY_TEXT = "answer_body_text"
+    const val ANSWER_BODY_IMAGE = "answer_body_image"
+    const val ANSWER_FIRST_CHOICE_TEXT = "answer_first_choice_text"
+    const val ANSWER_FIRST_CHOICE_IMAGE_URL = "answer_first_choice_image_url"
+    const val ANSWER_FIRST_CHOICE_IMAGE_PATH = "answer_first_choice_image_path"
+
+    const val ANSWER_SECOND_CHOICE_TEXT = "answer_second_choice_text"
+    const val ANSWER_SECOND_CHOICE_IMAGE_URL = "answer_second_choice_image_url"
+    const val ANSWER_SECOND_CHOICE_IMAGE_PATH = "answer_second_choice_image_path"
+
+    const val ANSWER_THIRD_CHOICE_TEXT = "answer_third_choice_text"
+    const val ANSWER_THIRD_CHOICE_IMAGE_URL = "answer_third_choice_image_url"
+    const val ANSWER_THIRD_CHOICE_IMAGE_PATH = "answer_third_choice_image_path"
+
+    const val ANSWER_FOURTH_CHOICE_TEXT = "answer_fourth_choice_text"
+    const val ANSWER_FOURTH_CHOICE_IMAGE_URL = "answer_fourth_choice_image_url"
+    const val ANSWER_FOURTH_CHOICE_IMAGE_PATH = "answer_fourth_choice_image_path"
+
+    const val QUESTION_SCORE = "question_score"
 
 }

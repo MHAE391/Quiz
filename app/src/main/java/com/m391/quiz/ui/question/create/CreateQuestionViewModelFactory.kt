@@ -8,14 +8,14 @@ import com.m391.quiz.ui.quiz.create.CreateQuizViewModel
 
 class CreateQuestionViewModelFactory(
     private val app: Application,
-    private val quizId: Int,
+    private val quizId: String,
     private val questionNumber: Int,
     private val insertQuestion: suspend (Question) -> Unit
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(CreateQuestionViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return CreateQuestionViewModel(app, quizId, questionNumber ,insertQuestion) as T
+            return CreateQuestionViewModel(app, quizId, questionNumber, insertQuestion) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

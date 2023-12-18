@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/student_graph"
+    app:startDestination="@id/studentHomeFragment">
+
+    <fragment
+        android:id="@+id/studentHomeFragment"
+        android:name="com.m391.quiz.ui.student.home.StudentHomeFragment"
+        android:label="StudentHomeFragment"
+        tools:layout="@layout/fragment_student_home">
+        <action
+            android:id="@+id/action_studentHomeFragment_to_teacherQuizzesFragment"
+            app:destination="@id/teacherQuizzesFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/teacherQuizzesFragment"
+        android:name="com.m391.quiz.ui.student.teacher.TeacherQuizzesFragment"
+        android:label="TeacherQuizzesFragment"
+        tools:layout="@layout/fragment_teacher_quizzes">
+        <argument
+            android:name="teacherId"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_teacherQuizzesFragment_to_solveQuizFragment"
+            app:destination="@id/solveQuizFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/solveQuizFragment"
+        android:name="com.m391.quiz.ui.quiz.solve.SolveQuizFragment"
+        android:label="SolveQuizFragment"
+        tools:layout="@layout/fragment_solve_quiz">
+        <argument
+            android:name="quiz"
+            app:argType="com.m391.quiz.models.QuizFirebaseModel" />
+        <action
+            android:id="@+id/action_solveQuizFragment_to_solveQuestionFragment"
+            app:destination="@id/solveQuestionFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/solveQuestionFragment"
+        android:name="com.m391.quiz.ui.question.solve.SolveQuestionFragment"
+        android:label="SolveQuestionFragment"
+        tools:layout="@layout/solve_question_item">
+        <argument
+            android:name="question"
+            app:argType="com.m391.quiz.models.QuestionFirebaseUIModel" />
+    </fragment>
+
+</navigation>

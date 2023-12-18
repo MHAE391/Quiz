@@ -130,5 +130,13 @@
     </string-array>
     <string name="teacher_database">Teacher Navigation Database</string>
     <string name="teacher_create">Teacher Navigation Create</string>
+    <string name="teachers">Teachers</string>
+    <string name="my_solutions">My Solutions</string>
+    <string name="quizzes">Quizzes</string>
+    <string name="quiz_description">Description</string>
+    <string name="subject">Subject</string>
+    <string name="questions">Questions</string>
+    <string name="solve_quiz">Solve Quiz</string>
+    <string name="upload_solution_to_server">Upload Solution To Server</string>
 
 </resources>
