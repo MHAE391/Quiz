@@ -59,6 +59,12 @@
         <argument
             android:name="question"
             app:argType="com.m391.quiz.models.QuestionFirebaseUIModel" />
+        <argument
+            android:name="progress"
+            app:argType="long" />
+        <argument
+            android:name="quizDuration"
+            app:argType="long" />
     </fragment>
 
 </navigation>

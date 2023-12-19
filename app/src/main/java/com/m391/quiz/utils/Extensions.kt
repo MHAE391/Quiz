@@ -36,6 +36,7 @@ import com.m391.quiz.utils.Statics.QUESTION_BODY_IMAGE_PATH
 import com.m391.quiz.utils.Statics.QUESTION_BODY_IMAGE_URL
 import com.m391.quiz.utils.Statics.QUESTION_BODY_TEXT
 import com.m391.quiz.utils.Statics.QUESTION_HEADER_TEXT
+import com.m391.quiz.utils.Statics.QUESTION_ID
 import com.m391.quiz.utils.Statics.QUESTION_SCORE
 import com.m391.quiz.utils.Statics.QUIZ_ID
 import java.io.ByteArrayOutputStream
@@ -194,6 +195,7 @@ fun QuestionUIModel.m391FirebaseModel(
     fourthChoiceImagePath: String?
 ): QuestionFirebaseModel {
     return QuestionFirebaseModel(
+        question_id = this.id,
         quiz_id = this.quizId,
         answer_body_image = this.answerBodyImage,
         answer_body_text = this.answerBodyText,
@@ -226,6 +228,33 @@ fun List<QuestionUIModel>.m391Score(): Int {
     return score
 }
 
+fun QuestionFirebaseUIModel.m391FirebaseModel(): QuestionFirebaseModel {
+    return QuestionFirebaseModel(
+        question_id = this.questionId,
+        quiz_id = this.quizId,
+        answer_body_image = this.answerBodyImage,
+        answer_body_text = this.answerBodyText,
+        question_score = this.questionScore,
+        question_body_text = this.questionBodyText,
+        question_header_text = this.questionHeaderText,
+        question_body_image_path = this.questionBodyImagePath,
+        question_body_image_url = this.questionBodyImageUrl,
+        answer_type = this.answerType,
+        answer_first_choice_image_path = this.answerFirstChoiceImagePath,
+        answer_first_choice_image_url = this.answerFirstChoiceImageUrl,
+        answer_second_choice_image_path = this.answerSecondChoiceImagePath,
+        answer_second_choice_image_url = this.answerSecondChoiceImageUrl,
+        answer_third_choice_image_path = this.answerThirdChoiceImagePath,
+        answer_third_choice_image_url = this.answerThirdChoiceImageUrl,
+        answer_fourth_choice_image_path = this.answerFourthChoiceImagePath,
+        answer_fourth_choice_image_url = this.answerFourthChoiceImageUrl,
+        answer_first_choice_text = this.answerFirstChoiceText,
+        answer_second_choice_text = this.answerSecondChoiceText,
+        answer_third_choice_text = this.answerThirdChoiceText,
+        answer_fourth_choice_text = this.answerFourthChoiceText
+    )
+}
+
 fun String?.m391ByteArray(contentResolver: ContentResolver): ByteArray? {
     return if (this.isNullOrBlank()) return null
     else convertImageToByteArray(contentResolver, this.toUri())
@@ -234,6 +263,7 @@ fun String?.m391ByteArray(contentResolver: ContentResolver): ByteArray? {
 fun List<HashMap<String, Any>>.m391List(): List<QuestionFirebaseModel> {
     return this.map { question ->
         QuestionFirebaseModel(
+            question_id = question[QUESTION_ID].toString(),
             quiz_id = question[QUIZ_ID].toString(),
             question_score = question[QUESTION_SCORE].toString().toInt(),
             question_body_image_path = question[QUESTION_BODY_IMAGE_PATH].toString(),
@@ -263,6 +293,7 @@ fun List<QuestionFirebaseModel>.m391FirebaseUIModel(): List<QuestionFirebaseUIMo
     var number = 0
     return this.map { question ->
         QuestionFirebaseUIModel(
+            questionId = question.question_id,
             questionNumber = ++number,
             quizId = question.quiz_id,
             questionScore = question.question_score,

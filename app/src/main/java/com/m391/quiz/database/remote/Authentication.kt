@@ -16,7 +16,6 @@ import java.util.concurrent.TimeUnit
 
 class Authentication {
     private val auth = FirebaseAuth.getInstance()
-
     fun getCurrentUser(): FirebaseUser? = auth.currentUser
 
     suspend fun sendVerificationCodeAsync(

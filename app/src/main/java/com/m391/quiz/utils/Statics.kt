@@ -1,10 +1,5 @@
 package com.m391.quiz.utils
 
-import android.provider.MediaStore
-import androidx.room.ColumnInfo
-import java.util.Calendar
-import java.util.Date
-
 object Statics {
     const val ONE_MEGABYTE: Long = 1024 * 1024
     const val CODE_SENT = "Code Sent"
@@ -60,6 +55,7 @@ object Statics {
     const val QUIZZES = "Quizzes"
     const val QUIZ = "Quiz"
     const val Question = "Question"
+    const val QUESTION_LOWER_CASE = "question"
     const val QUESTIONS = "questions"
     const val QUIZ_ID = "quiz_id"
     const val QUIZ_DURATION = "quiz_duration"
@@ -98,5 +94,30 @@ object Statics {
     const val ANSWER_FOURTH_CHOICE_IMAGE_PATH = "answer_fourth_choice_image_path"
 
     const val QUESTION_SCORE = "question_score"
+    const val QUESTION_ID = "question_id"
+    const val SOLUTIONS = "Solutions"
 
+    const val SOLUTION_TEXT = "solution_text"
+    const val SOLUTION_IMAGE_URL = "solution_image_url"
+    const val SOLUTION_IMAGE_PATH = "solution_image_path"
+    const val SOLUTION_MCQ = "mcq_solution"
+
+    const val QUIZZES_SOLVERS = "quizzesSolvers"
+    const val SOLVER_ERROR_RESPONSE = "Already Solved This Quiz"
+    const val START_TIME = "start_time"
+    const val SOLVER_SUCCESS_RESPONSE = "Quiz Started"
+
+    const val SHOW_QUESTION_ERROR = "Start Quiz First To Show Question"
+
+    const val MCQ_ANSWER_ERROR = "You Must Choose Answer"
+    const val ESSAY_ANSWER_ERROR = "You Must Enter Essay Answer"
+    const val SOLUTION_VALIDATION_SUCCESS = "Success Validation"
+
+    const val MCQ_FIRST = "First"
+    const val MCQ_SECOND = "Second"
+    const val MCQ_THIRD = "Third"
+    const val MCQ_FOURTH = "Fourth"
+    const val BODY_IMAGE_RESTED = "Answer Image Rested"
+    const val BODY_IMAGE_SELECTED = "Answer Image Selected"
+    const val QUIZ_TIME_OUT = "Quiz Time Out"
 }

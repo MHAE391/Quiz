@@ -4,6 +4,8 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
+import com.google.firebase.firestore.FirebaseFirestore
+import com.m391.quiz.utils.Statics.QUESTIONS
 
 @Entity(
     tableName = "questions",
@@ -15,8 +17,8 @@ import androidx.room.PrimaryKey
     )]
 )
 data class Question(
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "question_id") val id: Int = 0,
+    @PrimaryKey @ColumnInfo(name = "question_id") val id: String = FirebaseFirestore.getInstance()
+        .collection(QUESTIONS).document().id,
     @ColumnInfo(name = "quiz_id") val quizId: String,
     @ColumnInfo(name = "question_header_text") val headerText: String,
     @ColumnInfo(name = "question_body_text") val bodyText: String?,

@@ -166,7 +166,7 @@ object Binding {
     @BindingAdapter("android:questionImageUrl")
     @JvmStatic
     fun loadQuestionImageUrl(imageView: ImageView, image: String?) {
-        if (image == null) imageView.visibility = View.GONE
+        if (image.isNullOrBlank()) imageView.visibility = View.GONE
         else {
             loadPlaceholderImage(imageView, image)
         }

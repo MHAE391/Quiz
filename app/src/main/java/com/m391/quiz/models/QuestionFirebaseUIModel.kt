@@ -3,6 +3,7 @@ package com.m391.quiz.models
 import java.io.Serializable
 
 data class QuestionFirebaseUIModel(
+    val questionId: String,
     val quizId: String,
     val questionHeaderText: String,
     val questionBodyText: String?,

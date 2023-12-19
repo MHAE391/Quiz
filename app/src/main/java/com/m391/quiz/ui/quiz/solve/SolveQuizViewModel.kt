@@ -14,11 +14,15 @@ import com.m391.quiz.models.QuizFirebaseModel
 import com.m391.quiz.ui.shared.BaseViewModel
 import com.m391.quiz.utils.m391FirebaseUIModel
 import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.viewModelScope
+import com.m391.quiz.database.remote.Solutions
+import com.m391.quiz.utils.Statics.SOLVER_SUCCESS_RESPONSE
 import kotlinx.coroutines.launch
 
 class SolveQuizViewModel(
     private val app: Application,
-    val quiz: QuizFirebaseModel
+    val quiz: QuizFirebaseModel,
+    private val solution: Solutions
 ) : BaseViewModel(app), LifecycleObserver {
 
     private val _questions = MutableLiveData<List<QuestionFirebaseUIModel>>()
@@ -34,6 +38,11 @@ class SolveQuizViewModel(
             handler.postDelayed(this, 10)
         }
     }
+    private val _response = MutableLiveData<String>()
+    val response: LiveData<String> = _response
+
+    private val _quizStarted = MutableLiveData<Boolean>()
+    val quizStarted: LiveData<Boolean> = _quizStarted
 
 
     fun refreshQuestions() {
@@ -42,9 +51,21 @@ class SolveQuizViewModel(
         )
     }
 
+    fun resetResponse() {
+        _response.postValue(String())
+    }
+
     fun startProgress() {
         handler.postDelayed(runnable, 10)
-        showToast("Quiz Started")
+        _quizStarted.postValue(true)
+        showToast(SOLVER_SUCCESS_RESPONSE)
+    }
+
+    fun startQuiz() {
+        positiveShowLoading()
+        viewModelScope.launch {
+            _response.postValue(solution.startQuiz(quiz.quiz_id))
+        }
     }
 
 }

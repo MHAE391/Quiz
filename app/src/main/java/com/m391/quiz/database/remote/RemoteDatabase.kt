@@ -7,4 +7,5 @@ class RemoteDatabase {
     val quizzes = Quizzes(mediaStorage)
     val students = Students()
     val teachers = Teachers()
+    val solutions = Solutions(authentication, mediaStorage)
 }

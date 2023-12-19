@@ -14,6 +14,9 @@ import com.m391.quiz.databinding.FragmentSolveQuizBinding
 import com.m391.quiz.ui.quiz.preview.QuestionAdapter
 import com.m391.quiz.ui.shared.BaseFragment
 import com.m391.quiz.ui.shared.BaseViewModel
+import com.m391.quiz.utils.Statics.SHOW_QUESTION_ERROR
+import com.m391.quiz.utils.Statics.SOLVER_ERROR_RESPONSE
+import com.m391.quiz.utils.Statics.SOLVER_SUCCESS_RESPONSE
 import com.m391.quiz.utils.setupLinearRecycler
 import kotlinx.coroutines.launch
 
@@ -26,7 +29,8 @@ class SolveQuizFragment : BaseFragment() {
     override val viewModel by viewModels<SolveQuizViewModel> {
         SolveQuizViewModelFactory(
             requireActivity().application,
-            args.quiz
+            args.quiz,
+            remoteDatabase.solutions
         )
     }
 
@@ -40,32 +44,56 @@ class SolveQuizFragment : BaseFragment() {
     ): View {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
-        binding.uploadSolution.visibility = View.GONE
         return binding.root
     }
 
     override fun onResume() {
         super.onResume()
         viewModel.refreshQuestions()
+        viewModel.response.observe(viewLifecycleOwner) { response ->
+            if (!response.isNullOrBlank()) {
+                viewModel.resetResponse()
+                viewModel.negativeShowLoading()
+                when (response) {
+                    SOLVER_SUCCESS_RESPONSE -> viewModel.startProgress()
+                    SOLVER_ERROR_RESPONSE -> {
+                        viewModel.showSnackBar(
+                            SOLVER_ERROR_RESPONSE,
+                            requireView()
+                        )
+                        binding.startQuiz.isEnabled = true
+                    }
+                }
+            }
+        }
     }
 
     override fun onStart() {
         super.onStart()
         setupRecyclerView()
         binding.startQuiz.setOnClickListener {
-            viewModel.startProgress()
+            viewModel.startQuiz()
             it.isEnabled = false
-            binding.uploadSolution.visibility = View.VISIBLE
         }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        viewModel.response.removeObservers(viewLifecycleOwner)
+        viewModel.resetResponse()
     }
 
     private fun setupRecyclerView() {
         val adapter = SolveQuizAdapter {
-            findNavController().navigate(
-                SolveQuizFragmentDirections.actionSolveQuizFragmentToSolveQuestionFragment(
-                    it
+            if (viewModel.quizStarted.value == true)
+                findNavController().navigate(
+                    SolveQuizFragmentDirections.actionSolveQuizFragmentToSolveQuestionFragment(
+                        it,
+                        viewModel.quizProgress.value!!,
+                        quizDuration = args.quiz.quiz_duration
+                    )
                 )
-            )
+            else viewModel.showSnackBar(SHOW_QUESTION_ERROR, requireView())
         }
         binding.questionsRecycler.setupLinearRecycler(adapter, true)
     }

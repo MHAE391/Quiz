@@ -4,7 +4,7 @@ import java.io.Serializable
 
 
 data class QuestionUIModel(
-    val id: Int,
+    val id: String,
     val quizId: String,
     val questionHeaderText: String,
     val questionBodyText: String?,
