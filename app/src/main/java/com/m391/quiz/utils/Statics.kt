@@ -130,4 +130,10 @@ object Statics {
     const val STUDENT_QUIZ_TOTAL_SCORE = "student_total_score"
     const val QUIZZES_SCORES = "quizzes_scores"
 
+    const val STUDENTS_SOLVED_QUIZZES = "student_solved_quizzes"
+
+    const val STUDENT_SOLVED_QUIZ = "student_solved_quiz"
+    const val STUDENT_UNSOLVED_QUIZ = "student_unsolved_quiz"
+
+
 }

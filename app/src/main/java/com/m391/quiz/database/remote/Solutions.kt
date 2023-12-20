@@ -9,11 +9,13 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 import com.m391.quiz.models.QuestionFirebaseUIModel
 import com.m391.quiz.models.QuestionScore
+import com.m391.quiz.models.QuizFirebaseModel
 import com.m391.quiz.models.SolutionFirebaseModel
 import com.m391.quiz.models.StudentFirebaseModel
 import com.m391.quiz.utils.Statics.ANSWER_COMMENT
 import com.m391.quiz.utils.Statics.QUESTION_ID
 import com.m391.quiz.utils.Statics.QUESTION_LOWER_CASE
+import com.m391.quiz.utils.Statics.QUIZZES
 import com.m391.quiz.utils.Statics.QUIZZES_SCORES
 import com.m391.quiz.utils.Statics.QUIZZES_SOLVERS
 import com.m391.quiz.utils.Statics.QUIZ_SOLVER
@@ -26,6 +28,7 @@ import com.m391.quiz.utils.Statics.SOLUTION_TEXT
 import com.m391.quiz.utils.Statics.SOLVER_ERROR_RESPONSE
 import com.m391.quiz.utils.Statics.SOLVER_SUCCESS_RESPONSE
 import com.m391.quiz.utils.Statics.START_TIME
+import com.m391.quiz.utils.Statics.STUDENTS_SOLVED_QUIZZES
 import com.m391.quiz.utils.Statics.STUDENT_SCORE
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
@@ -162,19 +165,29 @@ class Solutions(
             return@withContext solution
         }
 
-    suspend fun startQuiz(quizId: String): String = withContext(Dispatchers.IO) {
-        var response = SOLVER_SUCCESS_RESPONSE
+    suspend fun checkUserSolvedQuiz(quizUid: String, studentUid: String): String =
+        withContext(Dispatchers.IO) {
+            var response = SOLVER_SUCCESS_RESPONSE
+            val solver =
+                firestore.collection(QUIZZES_SOLVERS).document(quizUid).collection(QUIZ_SOLVER)
+                    .document(studentUid).get().await()
+            if (solver.exists()) response = SOLVER_ERROR_RESPONSE
+            return@withContext response
+        }
+
+    suspend fun startQuiz(quiz: QuizFirebaseModel): String = withContext(Dispatchers.IO) {
         val currentUserUid = auth.getCurrentUser()!!.uid
-        val solver = firestore.collection(QUIZZES_SOLVERS).document(quizId).collection(QUIZ_SOLVER)
-            .document(currentUserUid).get().await()
-        if (solver.exists()) response = SOLVER_ERROR_RESPONSE
-        else {
+        val response = checkUserSolvedQuiz(quiz.quiz_id, currentUserUid)
+        if (response == SOLVER_SUCCESS_RESPONSE) {
             val map = mapOf(
                 START_TIME to Calendar.getInstance().time,
                 QUIZ_SOLVER to currentUserUid
             )
-            firestore.collection(QUIZZES_SOLVERS).document(quizId).collection(QUIZ_SOLVER)
+            firestore.collection(QUIZZES_SOLVERS).document(quiz.quiz_id).collection(QUIZ_SOLVER)
                 .document(currentUserUid).set(map).await()
+            firestore.collection(STUDENTS_SOLVED_QUIZZES).document(currentUserUid).collection(
+                QUIZZES
+            ).document(quiz.quiz_id).set(quiz).await()
         }
         return@withContext response
     }

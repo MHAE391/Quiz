@@ -1,43 +1,35 @@
-package com.m391.quiz.ui.question.marking
+package com.m391.quiz.ui.question.grade
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.m391.quiz.R
-import com.m391.quiz.databinding.FragmentMarkQuestionBinding
-import com.m391.quiz.databinding.FragmentMarkQuizBinding
+import com.m391.quiz.databinding.FragmentQuestionGradeBinding
 import com.m391.quiz.ui.shared.BaseFragment
 import com.m391.quiz.ui.shared.BaseViewModel
-import com.m391.quiz.utils.Statics.RESPONSE_SUCCESS
 import kotlinx.coroutines.launch
 
-
-class MarkQuestionFragment : BaseFragment() {
-
+class QuestionGradeFragment : BaseFragment() {
     private val binding by lazy {
-        FragmentMarkQuestionBinding.inflate(layoutInflater)
+        FragmentQuestionGradeBinding.inflate(layoutInflater)
     }
-
-    private val args by navArgs<MarkQuestionFragmentArgs>()
-    override val viewModel by viewModels<MarkQuestionViewModel> {
-        MarkQuestionViewModelFactory(
+    private val args by navArgs<QuestionGradeFragmentArgs>()
+    override val viewModel: QuestionGradeViewModel by viewModels<QuestionGradeViewModel> {
+        QuestionGradeViewModelFactory(
             requireActivity().application,
             args.question,
             remoteDatabase.solutions,
-            args.studentUid
+            remoteDatabase.authentication.getCurrentUser()!!.uid
         )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         if (args.question.answerType == "MCQ") {
             binding.essayAnswer.visibility = View.GONE
             binding.mcqGroup.visibility = View.VISIBLE
@@ -62,31 +54,10 @@ class MarkQuestionFragment : BaseFragment() {
 
     override fun onResume() {
         super.onResume()
+        viewModel.setQuestionData()
         lifecycleScope.launch {
             viewModel.studentSolution(viewLifecycleOwner)
             viewModel.getQuestionScore(viewLifecycleOwner)
-        }
-        viewModel.response.observe(viewLifecycleOwner) { response ->
-            if (!response.isNullOrBlank()) {
-                if (response == RESPONSE_SUCCESS) {
-                    viewModel.showToast(RESPONSE_SUCCESS)
-                    findNavController().popBackStack()
-                } else viewModel.showSnackBar(response, requireView())
-                viewModel.negativeShowLoading()
-                viewModel.resetResponse()
-                binding.uploadMarking.isEnabled = true
-            }
-        }
-        viewModel.setQuestionData()
-    }
-
-    override fun onStart() {
-        super.onStart()
-        binding.uploadMarking.setOnClickListener {
-            it.isEnabled = false
-            lifecycleScope.launch {
-                viewModel.uploadScore()
-            }
         }
     }
 
@@ -94,9 +65,6 @@ class MarkQuestionFragment : BaseFragment() {
         super.onPause()
         lifecycleScope.launch {
             viewModel.stopStudentSolution(viewLifecycleOwner)
-            viewModel.response.removeObservers(viewLifecycleOwner)
-            viewModel.resetResponse()
         }
     }
-
 }

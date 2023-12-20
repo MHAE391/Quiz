@@ -20,7 +20,10 @@ class StudentHomeViewModel(private val app: Application, private val firebaseTea
     suspend fun refreshTeachers(lifecycleOwner: LifecycleOwner) {
         viewModelScope.launch {
             firebaseTeachers.getAllTeachers().observe(lifecycleOwner) { remoteTeachers ->
-                if (!remoteTeachers.isNullOrEmpty()) _teachers.postValue(remoteTeachers)
+                if (!remoteTeachers.isNullOrEmpty()) {
+                    _teachers.postValue(remoteTeachers)
+                    negativeShowNoData()
+                } else positiveShowNoData()
             }
         }
     }

@@ -33,9 +33,6 @@ class MarkQuizViewModel(
 
     }
 
-    private val _studentScores = MutableLiveData<List<QuestionScore>>()
-    val studentScores: LiveData<List<QuestionScore>> = _studentScores
-
     private val _studentTotalScore = MutableLiveData<Int>()
 
     val studentTotalScore: LiveData<Int> = _studentTotalScore
@@ -43,7 +40,6 @@ class MarkQuizViewModel(
     suspend fun getStudentScores(lifecycleOwner: LifecycleOwner) {
         viewModelScope.launch {
             solutions.getStudentQuizScores(studentUid, quiz.quiz_id).observe(lifecycleOwner) {
-                _studentScores.postValue(it)
                 _studentTotalScore.postValue(it.m391Score())
             }
         }

@@ -47,6 +47,9 @@ class StudentHomeFragment : BaseFragment() {
     override fun onStart() {
         super.onStart()
         setupRecycler()
+        binding.archive.setOnClickListener {
+            findNavController().navigate(StudentHomeFragmentDirections.actionStudentHomeFragmentToQuizzesAnswersFragment())
+        }
     }
 
     private fun setupRecycler() {

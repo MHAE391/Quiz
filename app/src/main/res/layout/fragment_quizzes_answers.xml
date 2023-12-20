@@ -6,14 +6,14 @@
 
         <variable
             name="viewModel"
-            type="com.m391.quiz.ui.student.teacher.TeacherQuizzesViewModel" />
+            type="com.m391.quiz.ui.student.grades.QuizzesAnswersViewModel" />
     </data>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
-        tools:context=".ui.student.teacher.TeacherQuizzesFragment">
+        tools:context=".ui.student.grades.QuizzesAnswersFragment">
 
         <RelativeLayout
             android:id="@+id/header_title"
@@ -61,10 +61,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:contentDescription="@string/no_data"
             android:layout_centerVertical="true"
+            android:contentDescription="@string/no_data"
             android:fadeVisible="@{viewModel.showNoData.booleanValue()}"
             android:gravity="center"
             android:src="@mipmap/no_data" />
+
     </RelativeLayout>
 </layout>

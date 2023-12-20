@@ -11,7 +11,9 @@ import com.m391.quiz.models.QuizFirebaseModel
 class SolveQuizViewModelFactory(
     private val app: Application,
     private val quiz: QuizFirebaseModel,
-    private val solution: Solutions
+    private val solution: Solutions,
+    private val studentUid: String
+
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(SolveQuizViewModel::class.java)) {
@@ -19,7 +21,8 @@ class SolveQuizViewModelFactory(
             return SolveQuizViewModel(
                 app = app,
                 quiz,
-                solution
+                solution,
+                studentUid
             ) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")

@@ -8,6 +8,7 @@ import com.google.firebase.firestore.ListenerRegistration
 import com.m391.quiz.models.QuestionFirebaseModel
 import com.m391.quiz.models.QuizFirebaseModel
 import com.m391.quiz.models.QuizModel
+import com.m391.quiz.utils.Statics
 import com.m391.quiz.utils.Statics.QUESTIONS
 import com.m391.quiz.utils.Statics.QUIZ
 import com.m391.quiz.utils.Statics.QUIZZES
@@ -34,7 +35,7 @@ import java.util.Calendar
 import java.util.Date
 
 class Quizzes(private val media: MediaStorage) {
-    private val firestore = FirebaseFirestore.getInstance().collection(QUIZZES)
+    private val firestore = FirebaseFirestore.getInstance()
     private var registration: ListenerRegistration? = null
 
     suspend fun uploadQuiz(quiz: QuizModel): String = withContext(Dispatchers.IO) {
@@ -81,7 +82,7 @@ class Quizzes(private val media: MediaStorage) {
                     QUIZ_IMAGE_URL to bodyImage.second,
                     QUIZ_SCORE to quiz.questions.m391Score()
                 )
-            firestore.document(quiz.id)
+            firestore.collection(QUIZZES).document(quiz.id)
                 .set(firebaseQuiz).addOnFailureListener {
                     result = it.localizedMessage!!.toString()
                 }.await()
@@ -94,7 +95,7 @@ class Quizzes(private val media: MediaStorage) {
     suspend fun getAllQuizzes(): LiveData<List<QuizFirebaseModel>> =
         withContext(Dispatchers.IO) {
             val quizzes = MutableLiveData<List<QuizFirebaseModel>>()
-            registration = firestore.addSnapshotListener { value, error ->
+            registration = firestore.collection(QUIZZES).addSnapshotListener { value, error ->
                 if (error != null) {
                     Log.e("Quizzes Listener", "Listen failed.")
                     return@addSnapshotListener
@@ -126,6 +127,48 @@ class Quizzes(private val media: MediaStorage) {
                 }
             }
 
+            return@withContext quizzes
+        }
+
+    suspend fun studentSolvedQuizzes(studentId: String): LiveData<List<QuizFirebaseModel>> =
+        withContext(Dispatchers.IO) {
+            val quizzes = MutableLiveData<List<QuizFirebaseModel>>()
+            registration = firestore.collection(Statics.STUDENTS_SOLVED_QUIZZES).document(studentId)
+                .collection(
+                    QUIZZES
+                ).addSnapshotListener { value, error ->
+                    if (error != null) {
+                        Log.e("Quizzes Listener", "Listen Failed")
+                    }
+                    if (value != null) {
+                        val quizList = ArrayList<QuizFirebaseModel>()
+                        value.forEach { quiz ->
+                            val firebaseQuiz = QuizFirebaseModel(
+                                quiz_id = quiz.get(QUIZ_ID, String::class.java)!!,
+                                quiz_duration = quiz.get(QUIZ_DURATION, Long::class.java)!!,
+                                quiz_description = quiz.get(QUIZ_DESCRIPTION, String::class.java)!!,
+                                quiz_creation_time = quiz.get(
+                                    QUIZ_CREATION_TIME,
+                                    Date::class.java
+                                )!!,
+                                quiz_creator = quiz.get(QUIZ_CREATOR, String::class.java)!!,
+                                quiz_subject = quiz.get(QUIZ_SUBJECT, String::class.java)!!,
+                                quiz_score = quiz.get(QUIZ_SCORE, Int::class.java)!!,
+                                quiz_academic_year = quiz.get(
+                                    QUIZ_ACADEMIC_YEAR,
+                                    String::class.java
+                                )!!,
+                                quiz_title = quiz.get(QUIZ_TITLE, String::class.java)!!,
+                                quiz_image_path = quiz.get(QUIZ_IMAGE_PATH, String::class.java)!!,
+                                quiz_image_url = quiz.get(QUIZ_IMAGE_URL, String::class.java)!!,
+                                questions = (quiz.get(QUESTIONS) as List<HashMap<String, Any>>).m391List()
+                                    .shuffled()
+                            )
+                            quizList.add(firebaseQuiz)
+                            quizzes.postValue(quizList)
+                        }
+                    }
+                }
             return@withContext quizzes
         }
 

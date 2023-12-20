@@ -17,6 +17,13 @@
             app:exitAnim="@anim/to_left"
             app:popEnterAnim="@anim/from_left"
             app:popExitAnim="@anim/to_right" />
+        <action
+            android:id="@+id/action_studentHomeFragment_to_quizzesAnswersFragment"
+            app:destination="@id/quizzesAnswersFragment"
+            app:enterAnim="@anim/from_left"
+            app:exitAnim="@anim/to_right"
+            app:popEnterAnim="@anim/from_right"
+            app:popExitAnim="@anim/to_left" />
     </fragment>
     <fragment
         android:id="@+id/teacherQuizzesFragment"
@@ -50,6 +57,16 @@
             app:exitAnim="@anim/to_left"
             app:popEnterAnim="@anim/from_left"
             app:popExitAnim="@anim/to_right" />
+        <argument
+            android:name="destination"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_solveQuizFragment_to_questionGradeFragment"
+            app:destination="@id/questionGradeFragment"
+            app:enterAnim="@anim/from_left"
+            app:exitAnim="@anim/to_right"
+            app:popEnterAnim="@anim/from_right"
+            app:popExitAnim="@anim/to_left" />
     </fragment>
     <fragment
         android:id="@+id/solveQuestionFragment"
@@ -65,6 +82,28 @@
         <argument
             android:name="quizDuration"
             app:argType="long" />
+    </fragment>
+    <fragment
+        android:id="@+id/quizzesAnswersFragment"
+        android:name="com.m391.quiz.ui.student.grades.QuizzesAnswersFragment"
+        android:label="QuizzesAnswersFragment"
+        tools:layout="@layout/fragment_quizzes_answers">
+        <action
+            android:id="@+id/action_quizzesAnswersFragment_to_solveQuizFragment"
+            app:destination="@id/solveQuizFragment"
+            app:enterAnim="@anim/from_left"
+            app:exitAnim="@anim/to_right"
+            app:popEnterAnim="@anim/from_right"
+            app:popExitAnim="@anim/to_left" />
+    </fragment>
+    <fragment
+        android:id="@+id/questionGradeFragment"
+        android:name="com.m391.quiz.ui.question.grade.QuestionGradeFragment"
+        android:label="QuestionGradeFragment"
+        tools:layout="@layout/fragment_question_grade">
+        <argument
+            android:name="question"
+            app:argType="com.m391.quiz.models.QuestionFirebaseUIModel" />
     </fragment>
 
 </navigation>

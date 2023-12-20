@@ -48,6 +48,10 @@ class TeacherHomeFragment : BaseFragment() {
     override fun onStart() {
         super.onStart()
         setupRecyclerView()
+        viewModel.positiveShowNoData()
+        binding.unCompletedQuizzesLayout.visibility = View.GONE
+        binding.completedQuizzesLayout.visibility = View.GONE
+
         binding.createNewQuiz.setOnClickListener {
             findNavController().navigate(TeacherHomeFragmentDirections.actionTeacherHomeFragmentToCreateQuizFragment())
         }
@@ -80,7 +84,18 @@ class TeacherHomeFragment : BaseFragment() {
             viewModel.refreshUnCompletedQuizzes()
             viewModel.refreshQuizzes(viewLifecycleOwner)
         }
-
+        viewModel.unCompletedQuizzes.observe(viewLifecycleOwner) {
+            if (!it.isNullOrEmpty()) {
+                viewModel.negativeShowNoData()
+                binding.unCompletedQuizzesLayout.visibility = View.VISIBLE
+            }
+        }
+        viewModel.completedQuizzes.observe(viewLifecycleOwner) {
+            if (!it.isNullOrEmpty()) {
+                viewModel.negativeShowNoData()
+                binding.completedQuizzesLayout.visibility = View.VISIBLE
+            }
+        }
     }
 
     override fun onPause() {

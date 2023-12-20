@@ -1,6 +1,5 @@
-package com.m391.quiz.ui.student.teacher
+package com.m391.quiz.ui.student.grades
 
-import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,61 +8,39 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.m391.quiz.R
-import com.m391.quiz.databinding.FragmentTeacherQuizzesBinding
+import com.m391.quiz.databinding.FragmentQuizzesAnswersBinding
 import com.m391.quiz.ui.shared.BaseFragment
 import com.m391.quiz.ui.shared.BaseViewModel
-import com.m391.quiz.ui.student.home.TeachersAdapter
-import com.m391.quiz.utils.Statics.STUDENT_UNSOLVED_QUIZ
-import com.m391.quiz.utils.Statics.TYPE_STUDENT
+import com.m391.quiz.ui.student.teacher.QuizAdapter
+import com.m391.quiz.utils.Statics.STUDENT_SOLVED_QUIZ
 import com.m391.quiz.utils.setupLinearRecycler
 import kotlinx.coroutines.launch
-import java.util.Arrays
 
-class TeacherQuizzesFragment : BaseFragment() {
-
+class QuizzesAnswersFragment : BaseFragment() {
     private val binding by lazy {
-        FragmentTeacherQuizzesBinding.inflate(layoutInflater)
+        FragmentQuizzesAnswersBinding.inflate(layoutInflater)
     }
-    private val args by navArgs<TeacherQuizzesFragmentArgs>()
-    override val viewModel: TeacherQuizzesViewModel by viewModels {
-        TeacherQuizzesViewModelFactory(
+    override val viewModel by viewModels<QuizzesAnswersViewModel> {
+        QuizzesAnswersViewModelFactory(
             requireActivity().application,
             remoteDatabase.quizzes,
-            args.teacherId
+            remoteDatabase.solutions,
+            remoteDatabase.authentication.getCurrentUser()!!.uid
         )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding.lifecycleOwner = this
         binding.viewModel = viewModel
+        binding.lifecycleOwner = this
         return binding.root
-    }
-
-    override fun onStart() {
-        super.onStart()
-        setupRecycler()
-    }
-
-    private fun setupRecycler() {
-        val adapter = QuizAdapter { quiz ->
-            findNavController().navigate(
-                TeacherQuizzesFragmentDirections.actionTeacherQuizzesFragmentToSolveQuizFragment(
-                    quiz,
-                    STUDENT_UNSOLVED_QUIZ
-                )
-            )
-        }
-        binding.quizzesRecycler.setupLinearRecycler(adapter, true)
     }
 
     override fun onResume() {
@@ -80,4 +57,20 @@ class TeacherQuizzesFragment : BaseFragment() {
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+        setupRecycler()
+    }
+
+    private fun setupRecycler() {
+        val adapter = QuizAdapter {
+            findNavController().navigate(
+                QuizzesAnswersFragmentDirections.actionQuizzesAnswersFragmentToSolveQuizFragment(
+                    it,
+                    STUDENT_SOLVED_QUIZ
+                )
+            )
+        }
+        binding.quizzesRecycler.setupLinearRecycler(adapter, true)
+    }
 }

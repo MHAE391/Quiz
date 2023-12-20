@@ -7,14 +7,14 @@
 
         <variable
             name="viewModel"
-            type="com.m391.quiz.ui.question.marking.MarkQuestionViewModel" />
+            type="com.m391.quiz.ui.question.grade.QuestionGradeViewModel" />
     </data>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
-        tools:context=".ui.question.marking.MarkQuestionFragment">
+        tools:context=".ui.question.grade.QuestionGradeFragment">
 
 
         <RelativeLayout
@@ -349,48 +349,6 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/answer_score_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:orientation="horizontal"
-                    android:padding="@dimen/padding_5"
-                    tools:ignore="UselessParent">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="start|center"
-                        android:padding="@dimen/padding_5"
-                        android:text="@string/score"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/font_size_14"
-                        android:textStyle="bold|italic"
-                        tools:ignore="NestedWeights,RelativeOverlap" />
-
-                    <EditText
-                        android:id="@+id/answer_score"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/margin_5"
-                        android:layout_marginEnd="@dimen/margin_5"
-                        android:layout_weight="2"
-                        android:background="@drawable/edit_text_view"
-                        android:hint="@string/answer_score"
-                        android:importantForAutofill="no"
-                        android:inputType="number"
-                        android:maxLines="1"
-                        android:minHeight="50dp"
-                        android:padding="@dimen/padding_10"
-                        android:question_score="@{viewModel.questionScore.score}"
-                        android:scrollbarSize="0dp"
-                        android:scrollbars="vertical"
-                        android:text="@={viewModel.answerScore}"
-                        android:textSize="@dimen/font_size_14" />
-                </LinearLayout>
-
-                <LinearLayout
                     android:id="@+id/answer_comment_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -399,66 +357,26 @@
                     android:padding="@dimen/padding_5"
                     tools:ignore="UselessParent">
 
-                    <EditText
+                    <TextView
                         android:id="@+id/answer_comment"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/margin_5"
                         android:layout_marginEnd="@dimen/margin_5"
                         android:layout_weight="2"
-                        android:answer_comment="@{viewModel.questionScore.comment}"
+                        android:answer_comment_grade="@{viewModel.questionScore.comment}"
                         android:background="@drawable/edit_text_view"
+                        android:gravity="center_vertical"
                         android:hint="@string/answer_comment"
                         android:importantForAutofill="no"
-                        android:inputType="text"
                         android:maxLines="1"
                         android:minHeight="100dp"
                         android:padding="@dimen/padding_10"
                         android:scrollbarSize="0dp"
                         android:scrollbars="vertical"
-                        android:text="@={viewModel.answerComment}"
                         android:textSize="@dimen/font_size_14" />
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/upload_marking"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="20dp"
-            android:alpha="0.8"
-            android:contentDescription="@string/upload_solution_to_server"
-            android:foregroundGravity="center"
-            android:scaleType="center"
-            android:src="@mipmap/upload_to_server"
-            android:visibility="visible"
-            app:backgroundTint="@color/color_rose"
-            app:fabCustomSize="64dp"
-            app:fabSize="normal"
-            app:layout_anchorGravity="bottom|right|end"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:maxImageSize="45dp"
-            tools:ignore="ContentDescription" />
-
-        <ProgressBar
-            android:id="@+id/progressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:fadeVisible="@{viewModel.showLoading}"
-            android:gravity="center"
-            android:indeterminateTint="@color/colorAccent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
     </RelativeLayout>
 </layout>

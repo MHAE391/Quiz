@@ -72,6 +72,20 @@
                 android:time_progress="@{viewModel.quizProgress}"
                 android:visibility="visible"
                 tools:ignore="RelativeOverlap" />
+            <TextView
+                android:id="@+id/score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:question_score_points="@{viewModel.studentTotalScore}"
+                android:textAlignment="center"
+                android:textColor="@color/color_rose"
+                android:textSize="@dimen/font_size_14"
+                android:textStyle="italic|bold"
+                android:visibility="visible"
+                tools:ignore="RelativeOverlap" />
 
             <View
                 android:layout_width="match_parent"

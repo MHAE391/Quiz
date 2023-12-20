@@ -123,6 +123,16 @@ object Binding {
         if (score != null) textView.setText(score.toString())
     }
 
+    @BindingAdapter("android:answer_comment_grade")
+    @JvmStatic
+    fun setAnswerComment(textView: TextView, comment: String?) {
+        if (comment == null) textView.visibility = View.GONE
+        else {
+            textView.visibility = View.VISIBLE
+            textView.text = comment
+        }
+    }
+
     @SuppressLint("SetTextI18n")
     @BindingAdapter("android:answer_comment")
     @JvmStatic

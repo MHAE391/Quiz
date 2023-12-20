@@ -22,12 +22,15 @@ class TeacherQuizzesViewModel(
         viewModelScope.launch {
             firebaseQuizzes.getAllQuizzes().observe(lifecycleOwner) { allQuizzes ->
                 if (!allQuizzes.isNullOrEmpty()) {
+                    val teacherQuizzes = allQuizzes.filter {
+                        it.quiz_creator == teacherId
+                    }
+                    if (teacherQuizzes.isEmpty()) positiveShowNoData()
+                    else negativeShowNoData()
                     _quizzes.postValue(
-                        allQuizzes.filter {
-                            it.quiz_creator == teacherId
-                        }
+                        teacherQuizzes
                     )
-                }
+                } else positiveShowNoData()
             }
         }
     }

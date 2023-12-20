@@ -53,6 +53,7 @@
                 android:gravity="center"
                 android:src="@drawable/baseline_arrow_back_24"
                 tools:ignore="ContentDescription,UnusedAttribute,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
             <TextView
                 android:id="@+id/score"
                 android:layout_width="wrap_content"
@@ -60,13 +61,14 @@
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:gravity="center"
-                android:text="@{viewModel.studentTotalScore.toString() + ` Points`}"
+                android:question_score_points="@{viewModel.studentTotalScore}"
                 android:textAlignment="center"
                 android:textColor="@color/color_rose"
                 android:textSize="@dimen/font_size_14"
                 android:textStyle="italic|bold"
                 android:visibility="visible"
                 tools:ignore="RelativeOverlap" />
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
@@ -86,9 +88,19 @@
             android:layout_marginTop="@dimen/margin_10"
             android:layout_marginEnd="@dimen/margin_10"
             android:layout_marginBottom="@dimen/margin_10"
-            android:liveData="@{viewModel.questions}"
             android:background="@drawable/borders"
+            android:liveData="@{viewModel.questions}"
             android:padding="@dimen/padding_10" />
 
+        <ImageView
+            android:id="@+id/noDataTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:contentDescription="@string/no_data"
+            android:fadeVisible="@{viewModel.showNoData.booleanValue()}"
+            android:gravity="center"
+            android:src="@mipmap/no_data" />
     </RelativeLayout>
 </layout>

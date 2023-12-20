@@ -1,4 +1,4 @@
-package com.m391.quiz.ui.question.marking
+package com.m391.quiz.ui.question.grade
 
 import android.app.Application
 import androidx.lifecycle.LifecycleOwner
@@ -10,20 +10,14 @@ import com.m391.quiz.models.QuestionFirebaseUIModel
 import com.m391.quiz.models.QuestionScore
 import com.m391.quiz.models.SolutionFirebaseModel
 import com.m391.quiz.ui.shared.BaseViewModel
-import com.m391.quiz.utils.Statics.MCQ_FIRST
-import com.m391.quiz.utils.Statics.MCQ_FOURTH
-import com.m391.quiz.utils.Statics.MCQ_SECOND
-import com.m391.quiz.utils.Statics.MCQ_THIRD
-import com.m391.quiz.utils.Statics.RESPONSE_SUCCESS
-import com.m391.quiz.utils.Statics.SCORE_EMPTY_RESPONSE_ERROR
-import com.m391.quiz.utils.Statics.SCORE_VALUE_RESPONSE_ERROR
+import com.m391.quiz.utils.Statics
 import kotlinx.coroutines.launch
 
-class MarkQuestionViewModel(
+class QuestionGradeViewModel(
     private val app: Application,
     private val questionData: QuestionFirebaseUIModel,
     private val solutions: Solutions,
-    private val studentUid: String
+    private val studentId: String
 ) : BaseViewModel(app) {
     private val _question = MutableLiveData<QuestionFirebaseUIModel>()
     val question: LiveData<QuestionFirebaseUIModel> = _question
@@ -45,17 +39,17 @@ class MarkQuestionViewModel(
 
     suspend fun studentSolution(lifecycleOwner: LifecycleOwner) {
         viewModelScope.launch {
-            solutions.getStudentSolution(studentUid, questionData.questionId, questionData.quizId)
+            solutions.getStudentSolution(studentId, questionData.questionId, questionData.quizId)
                 .observe(
                     lifecycleOwner
                 ) {
                     _studentSolution.postValue(it)
                     if (questionData.answerType == "MCQ") {
                         when (it.mcqAnswer) {
-                            MCQ_FIRST -> firstMCQChecked.postValue(true)
-                            MCQ_SECOND -> secondMCQChecked.postValue(true)
-                            MCQ_THIRD -> thirdMCQChecked.postValue(true)
-                            MCQ_FOURTH -> fourthMCQChecked.postValue(true)
+                            Statics.MCQ_FIRST -> firstMCQChecked.postValue(true)
+                            Statics.MCQ_SECOND -> secondMCQChecked.postValue(true)
+                            Statics.MCQ_THIRD -> thirdMCQChecked.postValue(true)
+                            Statics.MCQ_FOURTH -> fourthMCQChecked.postValue(true)
                         }
                     }
                 }
@@ -65,7 +59,7 @@ class MarkQuestionViewModel(
     suspend fun getQuestionScore(lifecycleOwner: LifecycleOwner) {
         viewModelScope.launch {
             solutions.getStudentQuestionScore(
-                studentUid,
+                studentId,
                 questionData.quizId,
                 questionData.questionId
             ).observe(lifecycleOwner) {
@@ -74,46 +68,15 @@ class MarkQuestionViewModel(
         }
     }
 
-
     fun setQuestionData() {
         _question.postValue(questionData)
     }
 
     suspend fun stopStudentSolution(lifecycleOwner: LifecycleOwner) {
         viewModelScope.launch {
-            solutions.getStudentSolution(studentUid, questionData.questionId, questionData.quizId)
+            solutions.getStudentSolution(studentId, questionData.questionId, questionData.quizId)
                 .removeObservers(lifecycleOwner)
             solutions.closeSolutionsStream()
         }
-    }
-
-    private val _response = MutableLiveData<String>()
-    val response: LiveData<String> = _response
-    fun resetResponse() {
-        _response.postValue(String())
-    }
-
-    suspend fun uploadScore() {
-        positiveShowLoading()
-        viewModelScope.launch {
-            val result = checkScoreValidation()
-            if (result == RESPONSE_SUCCESS)
-                _response.postValue(
-                    solutions.uploadQuestionScore(
-                        studentUid, questionData.questionId, questionData.quizId,
-                        answerScore.value!!.toInt(),
-                        answerComment.value?.trim()
-                    )
-                )
-            else _response.postValue(result)
-        }
-    }
-
-    private fun checkScoreValidation(): String {
-        var response = RESPONSE_SUCCESS
-        if (answerScore.value.isNullOrBlank()) response = SCORE_EMPTY_RESPONSE_ERROR
-        else if (answerScore.value!!.toInt() > questionData.questionScore) response =
-            SCORE_VALUE_RESPONSE_ERROR
-        return response
     }
 }
