@@ -6,5 +6,5 @@ import com.m391.quiz.utils.BaseRecyclerViewAdapter
 
 class TeachersAdapter(callbacks: (TeacherFirebaseModel) -> Unit) :
     BaseRecyclerViewAdapter<TeacherFirebaseModel>(callbacks) {
-    override fun getLayoutRes(viewType: Int) = R.layout.teacher_iteam
+    override fun getLayoutRes(viewType: Int) = R.layout.teacher_item
 }

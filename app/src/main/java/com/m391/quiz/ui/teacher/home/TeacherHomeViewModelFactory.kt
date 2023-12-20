@@ -11,12 +11,13 @@ import com.m391.quiz.ui.authentication.phone.PhoneNumberViewModel
 class TeacherHomeViewModelFactory(
     private val app: Application,
     private val getAllQuizzes: suspend () -> List<Quiz>,
-    private val quizzes: Quizzes
+    private val quizzes: Quizzes,
+    private val uid: String
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(TeacherHomeViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return TeacherHomeViewModel(app, getAllQuizzes, quizzes) as T
+            return TeacherHomeViewModel(app, getAllQuizzes, quizzes, uid) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

@@ -6,21 +6,32 @@ import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
+import android.text.Editable
+import android.transition.ChangeBounds
+import android.transition.TransitionManager
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.DecelerateInterpolator
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.m391.quiz.R
+import com.m391.quiz.database.local.entities.Quiz
+import com.m391.quiz.models.QuizFirebaseModel
 import com.squareup.picasso.Picasso
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import kotlin.math.max
+import kotlin.math.min
 
 object Binding {
     @Suppress("UNCHECKED_CAST")
@@ -94,6 +105,36 @@ object Binding {
         else loadImage(imageView, imageUrl)
     }
 
+    @SuppressLint("SetTextI18n")
+    @BindingAdapter("android:question_score_points")
+    @JvmStatic
+    fun loadStudentScorePoints(textView: TextView, score: Int?) {
+        if (score == null) textView.visibility = View.GONE
+        else {
+            textView.visibility = View.VISIBLE
+            textView.text = "$score Points"
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    @BindingAdapter("android:question_score")
+    @JvmStatic
+    fun loadStudentScore(textView: EditText, score: Int?) {
+        if (score != null) textView.setText(score.toString())
+    }
+
+    @SuppressLint("SetTextI18n")
+    @BindingAdapter("android:answer_comment")
+    @JvmStatic
+    fun loadStudentAnswerComment(textView: EditText, comment: String?) {
+        try {
+            if (comment != null) textView.setText(comment)
+        } catch (e: Exception) {
+            Log.e("asdassadaa", e.localizedMessage!!)
+        }
+    }
+
+
     @BindingAdapter("android:placeholderImageByteArray")
     @JvmStatic
     fun loadPlaceholderImageByteArray(imageView: ImageView, imageUrl: ByteArray) {
@@ -130,7 +171,8 @@ object Binding {
 
     private fun expandView(view: View, duration: Long) {
         view.measure(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-        val targetHeight = view.measuredHeight
+        val targetHeight =
+            if (duration == 500L) view.measuredHeight else 1850
         view.visibility = View.GONE
         val animator = ValueAnimator.ofInt(0, targetHeight)
         animator.addUpdateListener { animation ->
@@ -158,6 +200,7 @@ object Binding {
     fun loadQuestionImageByteArray(imageView: ImageView, image: ByteArray?) {
         if (image == null) imageView.visibility = View.GONE
         else {
+            imageView.visibility = View.VISIBLE
             val bitmap = convertByteArrayToBitmap(image)
             imageView.setImageBitmap(bitmap)
         }
@@ -168,6 +211,7 @@ object Binding {
     fun loadQuestionImageUrl(imageView: ImageView, image: String?) {
         if (image.isNullOrBlank()) imageView.visibility = View.GONE
         else {
+            imageView.visibility = View.VISIBLE
             loadPlaceholderImage(imageView, image)
         }
     }

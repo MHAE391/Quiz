@@ -9,6 +9,7 @@ import com.m391.quiz.models.QuestionFirebaseModel
 import com.m391.quiz.models.QuestionFirebaseUIModel
 import com.m391.quiz.models.QuestionUIModel
 import com.m391.quiz.models.QuizFirebaseModel
+import com.m391.quiz.models.StudentFirebaseModel
 import com.m391.quiz.models.TeacherFirebaseModel
 
 
@@ -38,6 +39,10 @@ class DataBindingViewHolder<T>(private val binding: ViewDataBinding) :
 
             is QuestionFirebaseUIModel -> {
                 binding.setVariable(BR.question, item)
+            }
+
+            is StudentFirebaseModel -> {
+                binding.setVariable(BR.student, item)
             }
         }
         binding.executePendingBindings()

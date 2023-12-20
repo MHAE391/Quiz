@@ -109,7 +109,6 @@ class CreateQuestionFragment : BaseFragment() {
                 viewModel.setEssayVisibility(View.GONE)
                 viewModel.setMCQVisibility(View.VISIBLE)
                 layoutParams.addRule(RelativeLayout.BELOW, binding.mcqAnswer.id)
-
             } else {
                 viewModel.setEssayVisibility(View.VISIBLE)
                 viewModel.setMCQVisibility(View.GONE)

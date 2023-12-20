@@ -52,7 +52,7 @@ object Statics {
     const val EMPTY_MCQ_THIRD_CHOICE = "Please ,Enter Third Answer Text Or Image"
     const val EMPTY_MCQ_FOURTH_CHOICE = "Please ,Enter Fourth Answer Text Or Image"
 
-    const val QUIZZES = "Quizzes"
+    const val QUIZZES = "quizzes"
     const val QUIZ = "Quiz"
     const val Question = "Question"
     const val QUESTION_LOWER_CASE = "question"
@@ -95,14 +95,14 @@ object Statics {
 
     const val QUESTION_SCORE = "question_score"
     const val QUESTION_ID = "question_id"
-    const val SOLUTIONS = "Solutions"
+    const val SOLUTIONS = "solutions"
 
     const val SOLUTION_TEXT = "solution_text"
     const val SOLUTION_IMAGE_URL = "solution_image_url"
     const val SOLUTION_IMAGE_PATH = "solution_image_path"
     const val SOLUTION_MCQ = "mcq_solution"
 
-    const val QUIZZES_SOLVERS = "quizzesSolvers"
+    const val QUIZZES_SOLVERS = "quizzes_solvers"
     const val SOLVER_ERROR_RESPONSE = "Already Solved This Quiz"
     const val START_TIME = "start_time"
     const val SOLVER_SUCCESS_RESPONSE = "Quiz Started"
@@ -120,4 +120,14 @@ object Statics {
     const val BODY_IMAGE_RESTED = "Answer Image Rested"
     const val BODY_IMAGE_SELECTED = "Answer Image Selected"
     const val QUIZ_TIME_OUT = "Quiz Time Out"
+    const val QUIZ_SOLVER = "quiz_solver"
+
+    const val SCORE_EMPTY_RESPONSE_ERROR = "You Must Enter Answer Score"
+    const val SCORE_VALUE_RESPONSE_ERROR = "Answer Score Must be less than or equal Question Score"
+
+    const val STUDENT_SCORE = "student_Score"
+    const val ANSWER_COMMENT = "answer_comment"
+    const val STUDENT_QUIZ_TOTAL_SCORE = "student_total_score"
+    const val QUIZZES_SCORES = "quizzes_scores"
+
 }

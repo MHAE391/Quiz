@@ -8,12 +8,14 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.m391.quiz.R
+import com.m391.quiz.database.local.entities.Quiz
 import com.m391.quiz.database.local.repositories.QuizRepository
 import com.m391.quiz.databinding.FragmentTeacherHomeBinding
+import com.m391.quiz.models.QuizFirebaseModel
 import com.m391.quiz.ui.shared.BaseFragment
 import com.m391.quiz.ui.quiz.QuizViewModel
 import com.m391.quiz.ui.quiz.QuizViewModelFactory
-import com.m391.quiz.utils.Statics.TYPE_TEACHER
 import com.m391.quiz.utils.setupLinearRecycler
 import kotlinx.coroutines.launch
 
@@ -29,7 +31,8 @@ class TeacherHomeFragment : BaseFragment() {
         TeacherHomeViewModelFactory(
             requireActivity().application,
             teacherViewModel.getAllQuizzes,
-            remoteDatabase.quizzes
+            remoteDatabase.quizzes,
+            remoteDatabase.authentication.getCurrentUser()!!.uid
         )
     }
 
@@ -51,7 +54,7 @@ class TeacherHomeFragment : BaseFragment() {
     }
 
     private fun setupRecyclerView() {
-        val adapter = QuizzesAdapter { quiz ->
+        val unCompletedQuizzesAdapter = QuizzesAdapter<Quiz>(R.layout.quiz_item) { quiz ->
             findNavController().navigate(
                 TeacherHomeFragmentDirections
                     .actionTeacherHomeFragmentToPreviewQuizFragment(
@@ -59,13 +62,31 @@ class TeacherHomeFragment : BaseFragment() {
                     )
             )
         }
-        binding.unCompletedQuizzesRecycler.setupLinearRecycler(adapter, false)
+        binding.unCompletedQuizzesRecycler.setupLinearRecycler(unCompletedQuizzesAdapter, false)
+        val completedQuizzesAdapter =
+            QuizzesAdapter<QuizFirebaseModel>(R.layout.firebase_quiz_item) { quiz ->
+                findNavController().navigate(
+                    TeacherHomeFragmentDirections.actionTeacherHomeFragmentToQuizSolversFragment(
+                        quiz
+                    )
+                )
+            }
+        binding.completedQuizzesRecycler.setupLinearRecycler(completedQuizzesAdapter, true)
     }
 
     override fun onResume() {
         super.onResume()
         lifecycleScope.launch {
             viewModel.refreshUnCompletedQuizzes()
+            viewModel.refreshQuizzes(viewLifecycleOwner)
+        }
+
+    }
+
+    override fun onPause() {
+        super.onPause()
+        lifecycleScope.launch {
+            viewModel.stopRefreshQuizzes(viewLifecycleOwner)
         }
     }
 }

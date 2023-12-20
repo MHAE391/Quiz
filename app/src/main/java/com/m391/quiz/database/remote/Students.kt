@@ -28,33 +28,39 @@ class Students {
                     Log.e("Students Listener", error.localizedMessage!!)
                     return@addSnapshotListener
                 } else {
-                    val studentsArray = ArrayList<StudentFirebaseModel>()
-                    value?.forEach { teacher ->
-                        studentsArray.add(
-                            StudentFirebaseModel(
-                                uid = teacher.get(Statics.UID, String::class.java)!!,
-                                firstName = teacher.get(Statics.FIRST_NAME, String::class.java)!!,
-                                lastName = teacher.get(Statics.LAST_NAME, String::class.java)!!,
-                                dateOfBarth = teacher.get(
-                                    Statics.DATE_OF_BARTH,
-                                    String::class.java
-                                )!!,
-                                imageUrl = teacher.get(
-                                    PROFILE_IMAGE_URI,
-                                    String::class.java
-                                )!!,
-                                imagePath = teacher.get(
-                                    PROFILE_IMAGE_PATH,
-                                    String::class.java
-                                )!!,
-                                academicYear = teacher.get(
-                                    ACADEMIC_YEARS,
-                                    String::class.java
-                                )!!,
-                                subjects = teacher.get(ACADEMIC_SUBJECTS)!! as List<String>
+
+                    if (value != null) {
+                        val studentsArray = ArrayList<StudentFirebaseModel>()
+                        value.forEach { student ->
+                            studentsArray.add(
+                                StudentFirebaseModel(
+                                    uid = student.get(Statics.UID, String::class.java)!!,
+                                    firstName = student.get(
+                                        Statics.FIRST_NAME,
+                                        String::class.java
+                                    )!!,
+                                    lastName = student.get(Statics.LAST_NAME, String::class.java)!!,
+                                    dateOfBarth = student.get(
+                                        Statics.DATE_OF_BARTH,
+                                        String::class.java
+                                    )!!,
+                                    imageUrl = student.get(
+                                        PROFILE_IMAGE_URI,
+                                        String::class.java
+                                    )!!,
+                                    imagePath = student.get(
+                                        PROFILE_IMAGE_PATH,
+                                        String::class.java
+                                    )!!,
+                                    academicYear = student.get(
+                                        Statics.ACADEMIC_YEAR,
+                                        String::class.java
+                                    )!!,
+                                    subjects = student.get(ACADEMIC_SUBJECTS)!! as List<String>
+                                )
                             )
-                        )
-                        students.postValue(studentsArray)
+                            students.postValue(studentsArray)
+                        }
                     }
                 }
             }

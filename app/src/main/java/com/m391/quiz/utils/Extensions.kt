@@ -15,6 +15,7 @@ import com.m391.quiz.database.local.entities.Question
 import com.m391.quiz.database.local.entities.Quiz
 import com.m391.quiz.models.QuestionFirebaseModel
 import com.m391.quiz.models.QuestionFirebaseUIModel
+import com.m391.quiz.models.QuestionScore
 import com.m391.quiz.models.QuestionUIModel
 import com.m391.quiz.models.QuizModel
 import com.m391.quiz.utils.Statics.ANSWER_BODY_IMAGE
@@ -318,6 +319,10 @@ fun List<QuestionFirebaseModel>.m391FirebaseUIModel(): List<QuestionFirebaseUIMo
             answerFourthChoiceImageUrl = question.answer_fourth_choice_image_url
         )
     }
+}
+
+fun List<QuestionScore>.getQuestionScore(id: String): QuestionScore? {
+    return this.firstOrNull { it -> it.questionId == id }
 }
 /*
 const val QUESTION_HEADER_TEXT = "question_header_text"

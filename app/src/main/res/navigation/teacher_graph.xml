@@ -24,6 +24,13 @@
             app:exitAnim="@anim/to_left"
             app:popEnterAnim="@anim/from_left"
             app:popExitAnim="@anim/to_right" />
+        <action
+            android:id="@+id/action_teacherHomeFragment_to_quizSolversFragment"
+            app:destination="@id/quizSolversFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
     </fragment>
     <fragment
         android:id="@+id/createQuizFragment"
@@ -93,6 +100,54 @@
         <argument
             android:name="question"
             app:argType="com.m391.quiz.models.QuestionUIModel" />
+    </fragment>
+    <fragment
+        android:id="@+id/quizSolversFragment"
+        android:name="com.m391.quiz.ui.quiz.marking.students.QuizSolversFragment"
+        android:label="QuizSolversFragment"
+        tools:layout="@layout/fragment_quiz_solvers">
+        <argument
+            android:name="quiz"
+            app:argType="com.m391.quiz.models.QuizFirebaseModel" />
+        <action
+            android:id="@+id/action_quizSolversFragment_to_markQuizFragment"
+            app:destination="@id/markQuizFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/markQuizFragment"
+        android:name="com.m391.quiz.ui.quiz.marking.mark.MarkQuizFragment"
+        android:label="MarkQuizFragment"
+        tools:layout="@layout/fragment_mark_quiz">
+        <argument
+            android:name="quiz"
+            app:argType="com.m391.quiz.models.QuizFirebaseModel" />
+        <action
+            android:id="@+id/action_markQuizFragment_to_markQuestionFragment"
+            app:destination="@id/markQuestionFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
+        <argument
+            android:name="studentUid"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/markQuestionFragment"
+        android:name="com.m391.quiz.ui.question.marking.MarkQuestionFragment"
+        android:label="MarkQuestionFragment"
+        tools:layout="@layout/fragment_mark_question">
+
+        <argument
+            android:name="question"
+            app:argType="com.m391.quiz.models.QuestionFirebaseUIModel" />
+        <argument
+            android:name="studentUid"
+            app:argType="string" />
     </fragment>
 
 </navigation>

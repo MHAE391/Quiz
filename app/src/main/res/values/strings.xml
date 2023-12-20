@@ -105,18 +105,18 @@
     <string name="image_answer">Image Answer</string>
     <string name="first_answer_text">First Answer Text</string>
     <string name="first_answer">First Answer</string>
-    <string name="select_first_answer_image">Select First Answer Image</string>
+    <string name="select_first_answer_image">Select First Image</string>
     <string name="second_answer_text">Second Answer Text</string>
     <string name="second_answer">Second Answer</string>
-    <string name="select_second_answer_image">Select Second Answer Image</string>
+    <string name="select_second_answer_image">Select Second Image</string>
 
     <string name="third_answer_text">Third Answer Text</string>
     <string name="third_answer">Third Answer</string>
-    <string name="select_third_answer_image">Select Third Answer Image</string>
+    <string name="select_third_answer_image">Select Third Image</string>
 
     <string name="fourth_answer_text">Fourth Answer Text</string>
     <string name="fourth_answer">Fourth Answer</string>
-    <string name="select_fourth_answer_image">Select Fourth Answer Image</string>
+    <string name="select_fourth_answer_image">Select Fourth Image</string>
     <string name="preview">Preview</string>
     <string name="question_score">Question Score</string>
     <string name="score">Score</string>
@@ -138,5 +138,11 @@
     <string name="questions">Questions</string>
     <string name="solve_quiz">Solve Quiz</string>
     <string name="upload_solution_to_server">Upload Solution To Server</string>
+    <string name="completed_quizzes">Completed Quizzes</string>
+    <string name="teacher_home">Teacher Home</string>
+    <string name="students">Students</string>
+    <string name="no_data">No Data</string>
+    <string name="answer_score">Answer Score</string>
+    <string name="answer_comment">Answer Comment …</string>
 
 </resources>

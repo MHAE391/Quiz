@@ -16,11 +16,34 @@ import kotlinx.coroutines.launch
 class TeacherHomeViewModel(
     private val app: Application,
     private val getAllQuizzes: suspend () -> List<Quiz>,
-    private val quizzes: Quizzes
+    private val quizzes: Quizzes,
+    private val uid: String
 ) : BaseViewModel(app) {
     private val _unCompletedQuizzes = MutableLiveData<List<Quiz>>()
     val unCompletedQuizzes: LiveData<List<Quiz>> = _unCompletedQuizzes
 
+    private val _completedQuizzes = MutableLiveData<List<QuizFirebaseModel>>()
+    val completedQuizzes: LiveData<List<QuizFirebaseModel>> = _completedQuizzes
+    suspend fun refreshQuizzes(lifecycleOwner: LifecycleOwner) {
+        viewModelScope.launch {
+            quizzes.getAllQuizzes().observe(lifecycleOwner) { allQuizzes ->
+                if (!allQuizzes.isNullOrEmpty()) {
+                    _completedQuizzes.postValue(
+                        allQuizzes.filter {
+                            it.quiz_creator == uid
+                        }
+                    )
+                }
+            }
+        }
+    }
+
+    suspend fun stopRefreshQuizzes(lifecycleOwner: LifecycleOwner) {
+        viewModelScope.launch {
+            quizzes.getAllQuizzes().removeObservers(lifecycleOwner)
+            quizzes.closeQuizzesStream()
+        }
+    }
 
     suspend fun refreshUnCompletedQuizzes() {
         _unCompletedQuizzes.postValue(

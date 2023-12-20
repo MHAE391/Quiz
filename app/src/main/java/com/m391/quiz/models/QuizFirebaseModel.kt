@@ -15,6 +15,7 @@ data class QuizFirebaseModel(
     val quiz_description: String,
     val quiz_title: String,
     val quiz_score: Int,
-    val questions: List<QuestionFirebaseModel>
+    val questions: List<QuestionFirebaseModel>,
+    val studentTotalScore: Int? = null
 ) : Serializable
 
